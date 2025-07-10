@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+<div class="container-fluid" *ngIf="hotel">
+  <!-- Go Back Section -->
+  <div class="go-back-section-bg">
+    <div class="go-back-section container d-flex align-items-center pt-5 pb-5" (click)="goBack()">
+      <div class="go-back-container d-flex align-items-center">
+        <i class="fa-solid fa-arrow-left me-3"></i>
+        <p class="mb-0">Go To Hotels Page</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel Details Section -->
+  <div class="hotel-details-section">
+    <div class="container px-0 pt-5">
+      <div class="row">
+        <div class="col-md-6 hotel-details-image">
+          <img [src]="hotel.images[0]" alt="hotel image" class="img-fluid">
+        </div>
+        <div class="col-md-6 hotel-details-text">
+          <h2>{{ hotel.hotel }}</h2>
+          <div class="hotel-city-section d-flex align-items-center">
+            <i class="fa-solid fa-location-dot fa-2x"></i>
+            <p class="mb-0 ms-2">{{ hotel.city }}</p>
+          </div>
+          <div class="hotel-rating-section d-flex align-items-center">
+            <i class="fa-solid fa-star" *ngFor="let _ of getStarRatingArray(hotel.starRating)"></i>
+            <i class="fa-solid fa-star" style="color:grey;" *ngFor="let _ of getEmptyStarRatingArray(hotel.starRating)"></i>
+            <p class="ps-2 mb-0">({{ hotel.starRating }} Stars Hotel)</p>
+          </div>
+          <div class="hotel-price-section">
+            <p>${{ hotel.price }} <span>per night</span></p>
+          </div>
+          <button class="btn btn-primary">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Hotel Section -->
+  <div class="about-hotel-section">
+    <div class="container">
+      <h3>About this hotel</h3>
+      <p>{{ hotel.description }}</p>
+    </div>
+  </div>
+
+  <!-- Amenities Section -->
+  <div class="amenities">
+    <div class="container">
+      <h3>Amenities</h3>
+      <div class="amenities-list d-flex flex-wrap">
+        <div class="amenity d-flex align-items-center" *ngFor="let amenity of hotel.amenities">
+          <span [innerHTML]="amenity.icon"></span>
+          <p class="mb-0 ms-2">{{ amenity.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Gallery Section -->
+  <div class="photo-gallery">
+    <div class="container">
+      <h3>Photo Gallery</h3>
+      <div class="photos d-flex flex-wrap">
+        <div class="photo" *ngFor="let image of hotel.images">
+          <img [src]="image" alt="hotel-photo" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="container">
+      <h3>Ready to Book Your Stay?</h3>
+      <h4>Experience exceptional hospitality at {{ hotel.hotel }}</h4>
+      <button class="btn btn-primary">Book now - ${{ hotel.price }}/night</button>
+    </div>
+  </footer>
+</div>

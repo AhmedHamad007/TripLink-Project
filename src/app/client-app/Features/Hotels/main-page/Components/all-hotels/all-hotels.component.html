@@ -1,0 +1,77 @@
+<div class="container mt-5">
+  <app-navbar></app-navbar>
+  <h2>Hotel Reservation</h2>
+  <!-- Filters Selection -->
+  <div class="filters-selection">
+    <div class="filters-selection-title d-flex justify-content-start align-items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="lucide lucide-funnel w-5 h-5" aria-hidden="true">
+        <path
+          d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z">
+        </path>
+      </svg>
+      <p>Filter Hotels</p>
+    </div>
+    <div class="filter-selection-list flex-wrap pt-4 container justify-content-between align-items-start">
+      <div class="row">
+        <div class="filter-selection-item col">
+          <p>Location</p>
+          <select name="location" (change)="updateFilter($event, 'city')">
+            <option value="All">All</option>
+            <option value="New York">New York</option>
+            <option value="Miami">Miami</option>
+            <option value="Colorado">Colorado</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Chicago">Chicago</option>
+            <option value="Phoenix">Phoenix</option>
+          </select>
+        </div>
+        <div class="filter-selection-item col">
+          <p>Star Rating</p>
+          <select name="star-rating" (change)="updateFilter($event, 'starRating')">
+            <option value="All">All</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+          </select>
+        </div>
+        <div class="filter-selection-item col">
+          <p>Price Range</p>
+          <select name="price-range" (change)="updateFilter($event, 'price')">
+            <option value="All">All</option>
+            <option value="Above 500$">Above 500$</option>
+            <option value="300$-500$">300$-500$</option>
+            <option value="Less Than 300$">Less Than 300$</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Filters Results -->
+  <div class="filters-results container mt-5 py-5">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let product of showedProducts; let i = index">
+        <div class="filters-result position-relative">
+          <img [src]="product.images[0]" alt="hotel-image" class="img-fluid" [routerLink]="['/hotel-reservation', getHotelSlug(product.hotel)]" style="cursor: pointer;">
+          <h3>{{ product.hotel }}</h3>
+          <div class="filters-result-location d-flex align-items-start justify-content-start">
+            <i class="fa-solid fa-location-dot"></i>
+            <p>{{ product.city }}</p>
+          </div>
+          <div class="filters-result-price-section">
+            <p>{{ product.price }}$/night</p>
+          </div>
+          <div class="filters-result-star-rating">
+            <i class="fa-solid fa-star" *ngFor="let _ of getStarRatingArray(product.starRating)"></i>
+            <i class="fa-solid fa-star" style="color:grey;" *ngFor="let _ of getEmptyStarRatingArray(product.starRating)"></i>
+            <p>({{ product.starRating }} Stars)</p>
+          </div>
+          <p class="description">{{ product.description }}</p>
+          <button class="btn btn-primary" (click)="goToDetails(i)">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
