@@ -44,7 +44,7 @@
 <!-- SLIDE-IN PANEL VERSION -->
 <div id="guideSlidePanel" class="slide-panel" [ngClass]="{'active': selectedGuide}">
   <div class="slide-panel-content">
-    <button class="close-btn" (click)="closeSlidePanel()">x</button>
+    <button class="close-btn" ((click))="closeSlidePanel()">x</button>
     <h5 class="mb-3" *ngIf="selectedGuide">{{ selectedGuide.name }} - Skills & Routes</h5>
     <strong *ngIf="selectedGuide">Skills:</strong>
     <ul *ngIf="selectedGuide">
