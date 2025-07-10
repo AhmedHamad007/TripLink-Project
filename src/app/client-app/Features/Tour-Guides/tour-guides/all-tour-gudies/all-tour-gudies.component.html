@@ -1,0 +1,58 @@
+<section class="container py-5" id="all-guides">
+  <h2 class="text-center mb-4"> All Our Tour Guides </h2>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <!-- Guide card -->
+    <div class="col" *ngFor="let guide of tourGuides">
+      <div class="card guide-card h-100">
+        <img [src]="guide.image" class="card-img-top" [alt]="guide.name">
+        <div class="card-body">
+          <h5 class="card-title">{{ guide.name }}</h5>
+          <p class="card-text">Expert in {{ guide.specialty }}</p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#guideModal' + guide.id">Show in Pop up</button>
+            <button class="btn btn-outline-primary btn-sm" (click)="openSlidePanel(guide.id)"> Show in side </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL VERSION -->
+<div *ngFor="let guide of tourGuides" class="modal fade" [id]="'guideModal' + guide.id" tabindex="-1" [attr.aria-labelledby]="'guideModalLabel' + guide.id" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content guide-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" [id]="'guideModalLabel' + guide.id">{{ guide.name }} - Skills & Routes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <strong>Skills:</strong>
+        <ul>
+          <li *ngFor="let skill of guide.skills">{{ skill }}</li>
+        </ul>
+        <strong>Fixed Trips:</strong>
+        <ul>
+          <li *ngFor="let trip of guide.fixedTrips">{{ trip }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE-IN PANEL VERSION -->
+<div id="guideSlidePanel" class="slide-panel" [ngClass]="{'active': selectedGuide}">
+  <div class="slide-panel-content">
+    <button class="close-btn" (click)="closeSlidePanel()">x</button>
+    <h5 class="mb-3" *ngIf="selectedGuide">{{ selectedGuide.name }} - Skills & Routes</h5>
+    <strong *ngIf="selectedGuide">Skills:</strong>
+    <ul *ngIf="selectedGuide">
+      <li *ngFor="let skill of selectedGuide.skills">{{ skill }}</li>
+    </ul>
+    <strong *ngIf="selectedGuide">Fixed Trips:</strong>
+    <ul *ngIf="selectedGuide">
+      <li *ngFor="let trip of selectedGuide.fixedTrips">{{ trip }}</li>
+    </ul>
+  </div>
+</div>
