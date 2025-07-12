@@ -1,0 +1,79 @@
+<app-tourism-company-navbar></app-tourism-company-navbar>
+<!-- Start Of DashBoard Text  -->
+<div class="dashboard-text">
+    <div class="container">
+        <h1>DashBoard</h1>
+        <p>Welcome Back,{{name}}</p>
+    </div>
+</div>
+<!-- End Of DashBoard Text  -->
+<!-- Start Of DashBoard Card  -->
+<div class="dashboard-cards mt-5">
+    <div class="container">
+        <div class="dashboard-card">
+            <h2>Total Packages</h2>
+            <p>120</p>
+        </div>
+        <div class="dashboard-card">
+            <h2>Active Bookings</h2>
+            <p>45</p>
+        </div>
+        <div class="dashboard-card">
+            <h2>Revenue</h2>
+            <p>$150,000</p>
+        </div>
+    </div>
+</div>
+<!-- End Of DashBoard Card  -->
+<!-- Start Of Quick Actions  -->
+<div class="quick-actions mt-5">
+    <div class="container">
+        <h3>Quick Actions</h3>
+        <div class="actions mt-5">
+            <div class="action">
+                <p>Create New Package</p>
+            </div>
+            <div class="action">
+                <p>Manage Packages</p>
+            </div>
+            <div class="action">
+                <p>View Bookings</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Of Quick Actions  -->
+<!-- Start Of Recent Booking  -->
+<div class="recent-booking mb-2">
+    <div class="container mt-5">
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>Package Name</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+            @for (item of bookings; track $index) {
+            <tr>
+                <td data-label="Booking ID">
+                    <p>{{item.id}}</p>
+                </td>
+                <td data-label="Package Name">
+                    <p>{{item.name}}</p>
+                </td>
+                <td data-label="Customer">
+                    <p>{{item.customer}}</p>
+                </td>
+                <td data-label="Status">
+                    <p>{{item.status}}</p>
+                </td>
+                <td data-label="Date">
+                    <p>{{item.date}}</p>
+                </td>
+            </tr>
+            }
+        </table>
+    </div>
+</div>
+<!-- End Of Recent Booking  -->

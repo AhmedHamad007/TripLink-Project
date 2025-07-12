@@ -1,0 +1,44 @@
+.create-package .container {
+    padding: 10px 50px;
+}
+
+.create-package .container h1 {
+    font-size: 32px;
+}
+
+.create-package .container h1,
+.package-info h2 {
+    color: black;
+}
+
+.create-package .container p {
+    color: grey;
+}
+
+label {
+    color: black;
+}
+
+textarea {
+    padding: 8px;
+    border-radius: 8px;
+    resize: none;
+    width: 100%;
+    background-color: antiquewhite;
+}
+
+input {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+button {
+    background-color: antiquewhite;
+    color: black;
+    border: 1px solid black;
+    padding: 8px 30px;
+    margin-top: 20px;
+    font-weight: bold;
+    border-radius: 50px
+}

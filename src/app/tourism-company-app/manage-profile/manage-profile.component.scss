@@ -1,0 +1,108 @@
+//  Start Of Company edit profile 
+.company-edit-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.company-edit-profile .container>h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+}
+
+label {
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+form h2 {
+    color: black;
+}
+
+.file-input {
+    color: black;
+    background-color: antiquewhite;
+    border-radius: 8px;
+    margin: 0 auto;
+    padding: 8px;
+    width: 17%;
+}
+
+
+.file-input::file-selector-button,
+.file-input::-webkit-file-selector-button {
+    background-color: antiquewhite;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: none;
+}
+
+
+.container>button {
+    color: black;
+    background-color: antiquewhite;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+@media (min-width:992px) {
+    form {
+        width: 50%;
+    }
+
+    .update-logo {
+        width: 200%;
+    }
+}
+
+.company-edit-profile .container {
+    width: 85%;
+}
+
+
+textarea {
+    resize: none;
+    display: block;
+    border-radius: 15px;
+    width: 100%;
+    padding: 8px;
+}
+
+.company-edit-profile input {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 8px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+}
+
+.contact-info input {
+    width: 100%;
+}
+
+.contact-field {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.update-logo {
+    border: 1px dashed black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 5px;
+}
+
+//  End Of Company edit profile 
