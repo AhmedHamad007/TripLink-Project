@@ -9,7 +9,7 @@ import { TouristNavbarComponent } from './Components/tourist-navbar/tourist-navb
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule , NavbarComponent , RouterModule , TouristNavbarComponent
+    CommonModule , NavbarComponent , RouterModule , TouristNavbarComponent 
   ],
   exports : [NavbarComponent , TouristNavbarComponent]
 })
