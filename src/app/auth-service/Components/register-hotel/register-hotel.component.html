@@ -1,0 +1,107 @@
+<app-navbar></app-navbar>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100" style="max-width: 500px;">
+    <h3 class="text-center mb-4" style="color: #c68919;">Hotel Registration</h3>
+    <form #hotelForm="ngForm" (ngSubmit)="onSubmit(hotelForm)">
+      <div class="mb-3">
+        <label for="name" class="form-label">Hotel Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          [(ngModel)]="hotelData.name"
+          required
+          #name="ngModel"
+          [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="name.invalid && (name.dirty || name.touched)">
+          Hotel Name is required.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          [(ngModel)]="hotelData.email"
+          required
+          email
+          #email="ngModel"
+          [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched)">
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          [(ngModel)]="hotelData.password"
+          required
+          minlength="6"
+          #password="ngModel"
+          [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched)">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="stars" class="form-label">Star Rating</label>
+        <select
+          class="form-control"
+          id="stars"
+          name="stars"
+          [(ngModel)]="hotelData.stars"
+          required
+          #stars="ngModel"
+          [ngClass]="{'is-invalid': stars.invalid && (stars.dirty || stars.touched)}"
+        >
+          <option value="" disabled>Select star rating</option>
+          <option value="1">1 Star</option>
+          <option value="2">2 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="5">5 Stars</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="stars.invalid && (stars.dirty || stars.touched)">
+          Star Rating is required.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input
+          type="text"
+          class="form-control"
+          id="location"
+          name="location"
+          [(ngModel)]="hotelData.location"
+          required
+          #location="ngModel"
+          [ngClass]="{'is-invalid': location.invalid && (location.dirty || location.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="location.invalid && (location.dirty || location.touched)">
+          Location is required.
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        style="background-color: #c68919; border-color: #c68919;"
+        [disabled]="hotelForm.invalid"
+      >
+        Register
+      </button>
+    </form>
+    <div class="text-center mt-3">
+      <small class="text-muted">Already have an account? <a [routerLink]="['/login']">Login here</a></small>
+    </div>
+  </div>
+</div>

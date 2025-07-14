@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100" style="max-width: 400px;">
+    <h3 class="text-center mb-4" style="color: #c68919;">Login</h3>
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="loginData.email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" [(ngModel)]="loginData.password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" style="background-color: #c68919; border-color: #c68919;">Login</button>
+    </form>
+    <div class="text-center mt-3">
+      <small class="text-muted">Don't have an account? <a [routerLink]="['/register']">Register here</a></small>
+    </div>
+  </div>
+</div>

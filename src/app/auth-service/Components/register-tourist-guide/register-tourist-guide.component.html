@@ -1,0 +1,101 @@
+<app-navbar></app-navbar>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100" style="max-width: 500px;">
+    <h3 class="text-center mb-4" style="color: #c68919;">Tour Guide Registration</h3>
+    <form #tourGuideForm="ngForm" (ngSubmit)="onSubmit(tourGuideForm)">
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          [(ngModel)]="tourGuideData.name"
+          required
+          #name="ngModel"
+          [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="name.invalid && (name.dirty || name.touched)">
+          Full Name is required.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          [(ngModel)]="tourGuideData.email"
+          required
+          email
+          #email="ngModel"
+          [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched)">
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          [(ngModel)]="tourGuideData.password"
+          required
+          minlength="6"
+          #password="ngModel"
+          [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched)">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="specialty" class="form-label">Specialty</label>
+        <input
+          type="text"
+          class="form-control"
+          id="specialty"
+          name="specialty"
+          [(ngModel)]="tourGuideData.specialty"
+          required
+          #specialty="ngModel"
+          [ngClass]="{'is-invalid': specialty.invalid && (specialty.dirty || specialty.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="specialty.invalid && (specialty.dirty || specialty.touched)">
+          Specialty is required.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="languages" class="form-label">Languages</label>
+        <input
+          type="text"
+          class="form-control"
+          id="languages"
+          name="languages"
+          [(ngModel)]="tourGuideData.languages"
+          required
+          #languages="ngModel"
+          [ngClass]="{'is-invalid': languages.invalid && (languages.dirty || languages.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="languages.invalid && (languages.dirty || languages.touched)">
+          Languages are required.
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        style="background-color: #c68919; border-color: #c68919;"
+        [disabled]="tourGuideForm.invalid"
+      >
+        Register
+      </button>
+    </form>
+    <div class="text-center mt-3">
+      <small class="text-muted">Already have an account? <a [routerLink]="['/login']">Login here</a></small>
+    </div>
+  </div>
+</div>

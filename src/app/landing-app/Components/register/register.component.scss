@@ -1,0 +1,26 @@
+.option-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #dee2e6;
+  border-radius: 1rem;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.15);
+}
+
+.role-title {
+  color: #c68919;
+  font-weight: 600;
+}
+
+/* دعم الأجهزة الصغيرة */
+@media (max-width: 576px) {
+  .option-card {
+    margin-bottom: 1rem;
+  }
+  .role-title {
+    font-size: 1rem;
+  }
+}

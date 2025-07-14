@@ -1,0 +1,64 @@
+.container {
+  background-color: #f0f8ff; /* Light blue tint for tourist */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card {
+  border: 2px solid #c68919;
+  border-radius: 8px;
+}
+
+.card-title {
+  color: #c68919;
+  font-weight: 600;
+}
+
+.list-group-item {
+  background-color: transparent;
+  border: none;
+  padding: 10px 0;
+}
+
+.list-group-item strong {
+  color: #c68919;
+}
+
+.btn-danger {
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-danger:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+}
+
+.text-muted a {
+  color: #c68919;
+  text-decoration: none;
+}
+
+.text-muted a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 15px;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    padding: 10px;
+  }
+}

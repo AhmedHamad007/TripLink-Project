@@ -1,1 +1,48 @@
-<p>register works!</p>
+<app-navbar></app-navbar>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100" style="max-width: 900px;">
+    <h3 class="text-center mb-5" style="color: #c68919;">Register As</h3>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <a [routerLink]="['/register/tourist']" class="card text-center shadow-sm option-card h-100 text-decoration-none">
+          <div class="card-body">
+            <i class="bi bi-person display-4 mb-3" style="color: #c68919;"></i>
+            <h5 class="card-title role-title">Tourist</h5>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <a [routerLink]="['/register/tourist-guide']" class="card text-center shadow-sm option-card h-100 text-decoration-none">
+          <div class="card-body">
+            <i class="bi bi-map display-4 mb-3" style="color: #c68919;"></i>
+            <h5 class="card-title role-title">Tour Guide</h5>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <a [routerLink]="['/register/tourism-company']" class="card text-center shadow-sm option-card h-100 text-decoration-none">
+          <div class="card-body">
+            <i class="bi bi-building display-4 mb-3" style="color: #c68919;"></i>
+            <h5 class="card-title role-title">Tourism Company</h5>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <a [routerLink]="['/register/hotel']" class="card text-center shadow-sm option-card h-100 text-decoration-none">
+          <div class="card-body">
+            <i class="bi bi-house-door display-4 mb-3" style="color: #c68919;"></i>
+            <h5 class="card-title role-title">Hotel</h5>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <small class="text-muted">Already have an account? <a [routerLink]="['/login']">Login here</a></small>
+    </div>
+  </div>
+</div>

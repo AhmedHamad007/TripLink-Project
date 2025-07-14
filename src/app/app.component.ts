@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { ClientAppModule } from './client-app/client-app.module';
-import { SharedAppModule } from './shared-app/shared-app.module';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet ,  ClientAppModule , SharedAppModule , RouterModule ],
+  imports: [RouterOutlet ,  ClientAppModule  , RouterModule , FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -1,0 +1,115 @@
+$primary-color: #c68919;
+$background-color: #f5e6ff; // Light purple for hotel
+$invalid-color: #dc3545;
+$font-family: 'Roboto', sans-serif;
+
+.container {
+  background-color: $background-color;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h3 {
+  font-family: $font-family;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $primary-color;
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  font-family: $font-family;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: $primary-color;
+}
+
+.form-control {
+  font-family: $font-family;
+  font-size: 1.8rem;
+  border: 2px solid $primary-color;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    border-color: darken($primary-color, 10%);
+    box-shadow: 0 0 8px rgba($primary-color, 0.3);
+    outline: none;
+  }
+
+  &.is-invalid {
+    border-color: $invalid-color;
+  }
+}
+
+.invalid-feedback {
+  font-family: $font-family;
+  font-size: 0.9rem;
+  color: $invalid-color;
+}
+
+.btn-primary {
+  font-family: $font-family;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background-color: $primary-color;
+  border-color: $primary-color;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+    border-color: darken($primary-color, 10%);
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    border-color: #cccccc;
+    cursor: not-allowed;
+  }
+}
+
+.text-muted {
+  font-family: $font-family;
+  font-size: 1rem;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 1rem;
+  }
+
+  h3 {
+    font-size: 1.8rem;
+  }
+
+  .form-label {
+    font-size: 1rem;
+  }
+
+  .form-control {
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    font-size: 1.1rem;
+  }
+}
