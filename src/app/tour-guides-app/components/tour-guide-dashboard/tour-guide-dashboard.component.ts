@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth-service/Services/Auth/auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { NavbarComponent } from '../../../shared-app/Components/navbar/navbar.component';
 
 @Component({
   selector: 'app-tour-guide-dashboard',

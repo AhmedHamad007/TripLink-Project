@@ -1,20 +1,59 @@
 <app-navbar></app-navbar>
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="w-100" style="max-width: 400px;">
-    <h3 class="text-center mb-4" style="color: #c68919;">Login</h3>
-    <form (ngSubmit)="onSubmit()">
+  <div class="w-100 bg-white shadow-lg rounded-lg p-4" style="max-width: 400px;">
+    <h3 class="text-center mb-4 font-bold" style="color: #c68919;">Login</h3>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" [(ngModel)]="loginData.email" name="email" required>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          [(ngModel)]="loginData.email"
+          #email="ngModel"
+          required
+          email
+          [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}"
+        >
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback">
+          <div *ngIf="email.errors?.['required']">Email is required</div>
+          <div *ngIf="email.errors?.['email']">Invalid email address</div>
+        </div>
+        <div *ngIf="errors.email" class="invalid-feedback d-block">{{ errors.email }}</div>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" [(ngModel)]="loginData.password" name="password" required>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          [(ngModel)]="loginData.password"
+          #password="ngModel"
+          required
+          minlength="6"
+          [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}"
+        >
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+          <div *ngIf="password.errors?.['required']">Password is required</div>
+          <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters long</div>
+        </div>
+        <div *ngIf="errors.password" class="invalid-feedback d-block">{{ errors.password }}</div>
       </div>
-      <button type="submit" class="btn btn-primary w-100" style="background-color: #c68919; border-color: #c68919;">Login</button>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        style="background-color: #c68919; border-color: #c68919;"
+        [disabled]="isLoading || loginForm.invalid"
+        [ngClass]="{'opacity-50 cursor-not-allowed': isLoading || loginForm.invalid}"
+      >
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
     </form>
     <div class="text-center mt-3">
-      <small class="text-muted">Don't have an account? <a [routerLink]="['/register']">Register here</a></small>
+      <small class="text-muted">Don't have an account? <a [routerLink]="['/register']" class="text-primary">Register here</a></small>
     </div>
   </div>
 </div>
