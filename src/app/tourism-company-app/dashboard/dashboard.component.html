@@ -1,4 +1,3 @@
-<app-tourism-company-navbar></app-tourism-company-navbar>
 <!-- Start Of DashBoard Text  -->
 <div class="dashboard-text">
     <div class="container">
@@ -12,15 +11,15 @@
     <div class="container">
         <div class="dashboard-card">
             <h2>Total Packages</h2>
-            <p>120</p>
+            <p>{{numberOfPackages}}</p>
         </div>
         <div class="dashboard-card">
             <h2>Active Bookings</h2>
-            <p>45</p>
+            <p>{{activeBookingsNumber}}</p>
         </div>
         <div class="dashboard-card">
             <h2>Revenue</h2>
-            <p>$150,000</p>
+            <p>${{price}}</p>
         </div>
     </div>
 </div>
@@ -31,13 +30,10 @@
         <h3>Quick Actions</h3>
         <div class="actions mt-5">
             <div class="action">
-                <p>Create New Package</p>
+                <a routerLink="/company/new-package">Create New Package</a>
             </div>
             <div class="action">
-                <p>Manage Packages</p>
-            </div>
-            <div class="action">
-                <p>View Bookings</p>
+                <a routerLink="/company/bookings">View Bookings</a>
             </div>
         </div>
     </div>
@@ -46,30 +42,33 @@
 <!-- Start Of Recent Booking  -->
 <div class="recent-booking mb-2">
     <div class="container mt-5">
-        <table>
+        <table class="mb-3">
             <tr>
-                <th>Booking ID</th>
                 <th>Package Name</th>
-                <th>Customer</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th>Total Price</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
             </tr>
-            @for (item of bookings; track $index) {
+            @for (item of packages; track $index) {
             <tr>
-                <td data-label="Booking ID">
-                    <p>{{item.id}}</p>
-                </td>
                 <td data-label="Package Name">
-                    <p>{{item.name}}</p>
+                    <p>{{item.packageName}}</p>
                 </td>
-                <td data-label="Customer">
-                    <p>{{item.customer}}</p>
+                <td data-label="Total Price">
+                    <p>{{item.price}}</p>
                 </td>
-                <td data-label="Status">
-                    <p>{{item.status}}</p>
+                <td data-label="Start Date">
+                    <p>{{item.startDate.split("T")[0]}}</p>
                 </td>
-                <td data-label="Date">
-                    <p>{{item.date}}</p>
+                <td data-label="End Date">
+                    <p>{{item.endDate.split("T")[0]}}</p>
+                </td>
+                <td data-label="Actions">
+                    <p><a [routerLink]="['/company/edit-package',item.packageId]">
+                            Edit
+                        </a></p>
+                    <p (click)="openDeleteDialog(item.packageId)">Delete</p>
                 </td>
             </tr>
             }

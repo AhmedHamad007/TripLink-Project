@@ -1,52 +1,64 @@
-import { Component } from '@angular/core';
-import { Booking } from './booking';
-import { TourismCompanyNavbarComponent } from '../tourism-company-navbar/tourism-company-navbar.component';
-import { RouterModule } from '@angular/router';
+import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Package } from '../interfaces/package';
+import { CompanyService } from '../services/company.service';
+import { DeletePackageComponent } from './delete-package/delete-package.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TourismCompanyNavbarComponent, RouterModule],
+  imports: [RouterModule, MatDialogModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+
+  constructor(private route: ActivatedRoute, private service: CompanyService, private dialog: MatDialog) { }
+
+
+  ngOnInit(): void {
+    this.service.packages$.subscribe(
+      {
+        next: (val) => {
+          this.packages = val;
+          this.numberOfPackages = this.packages.length;
+        },
+        error: (err) => {
+          alert(err);
+        }
+      }
+    );
+    this.service.bookings$.subscribe(
+      {
+        next: (val) => {
+          this.activeBookingsNumber = val.length;
+          this.price = 0;
+          val.map((booking) => {
+            this.price += booking.totalPrice;
+          });
+        },
+        error: (err) => {
+          alert(err);
+        }
+      }
+    );
+    this.service.getCompanyPackages("e252c219-635c-4d18-bbf9-5c1573c94a77");
+    this.service.getCompanyBookings("khaled.mahmoud@example.com");
+  }
+
   name: string = "Aisha";
 
-  bookings: Array<Booking> = [
-    {
-      id: 12345,
-      name: "Pyramids & Nile Cruise",
-      customer: "Omar Hassan",
-      date: "2024-07-20",
-      status: "Confirmed"
-    },
-    {
-      id: 12346,
-      name: "Red Sea Diving Adventure",
-      customer: "Fatima Ali",
-      date: "2024-07-22",
-      status: "Pending"
-    },
-    {
-      id: 12347,
-      name: "Cairo City Tour",
-      customer: "Ahmed Khaled",
-      date: "2024-07-18",
-      status: "Completed"
-    },
-    {
-      id: 12348,
-      name: "Luxor Temples Exploration",
-      customer: "Layla Ibrahim",
-      date: "2024-07-25",
-      status: "Confirmed"
-    },
-    {
-      id: 12349,
-      name: "Desert Safari",
-      customer: "Youssef Mahmoud",
-      date: "2024-07-28",
-      status: "Pending"
-    },
-  ]
+  packages!: Package[];
+
+  activeBookingsNumber: number = 0;
+
+  price: number = 0;
+
+  numberOfPackages!: number;
+
+  openDeleteDialog(packageId: string): void {
+    this.dialog.open(DeletePackageComponent, {
+      data: { id: packageId }
+    });
+  }
 }

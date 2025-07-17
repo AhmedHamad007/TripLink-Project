@@ -89,8 +89,6 @@
  // End Of quick actions  
  // Start Of Recent Booking  
 
-
-
  table {
      border: 1px solid black;
      border-radius: 10px;
@@ -153,6 +151,10 @@
      .recent-booking td {
          padding: 40px 15px;
      }
+
+     .recent-booking td {
+         border-bottom: 1px solid black;
+     }
  }
 
  @media (min-width:768px) {
@@ -166,14 +168,29 @@
  .recent-booking th,
  .recent-booking td {
      text-align: left;
-     border-bottom: 1px solid black;
  }
 
- .recent-booking td[data-label="Status"] p {
-     background-color: #F2F0E8;
-     text-align: center;
-     padding: 5px 16px;
-     border-radius: 10px;
+ @media (min-width:768px) {
+
+     .recent-booking td,
+     .recent-booking th {
+         border-bottom: 1px solid black;
+     }
+
+     .recent-booking tr:last-child td {
+         border-bottom: none;
+     }
  }
+
+ @media (max-width:767px) {
+     .recent-booking td[data-label="Actions"] p:last-child {
+         margin-inline-start: 25%;
+     }
+ }
+
+ .recent-booking td[data-label="Actions"] p:last-child {
+     cursor: pointer;
+ }
+
 
  // End Of Recent Booking  

@@ -1,0 +1,140 @@
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f9f9f9;
+        color: #333;
+    }
+
+    header {
+        background: #fff;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .container {
+        padding: 40px;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .quick-actions,
+    .recent-bookings,
+    .performance {
+        margin-bottom: 40px;
+    }
+
+    .quick-actions {
+        display: flex;
+        gap: 20px;
+    }
+
+    .quick-actions button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #1e88e5;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .recent-bookings table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    @media (min-width:768px) {
+
+        .recent-bookings th,
+        .recent-bookings td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .recent-bookings th {
+            background-color: #f0f0f0;
+            text-align: left;
+        }
+    }
+
+    @media (max-width:767px) {
+
+        .recent-bookings th {
+            display: none;
+        }
+
+        .recent-bookings td {
+            display: block;
+            border-bottom: 1px solid black;
+            position: relative;
+            padding: 15px;
+            padding-inline-start: 50%;
+        }
+
+        .recent-bookings td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 10%;
+        }
+    }
+
+    .status-confirmed {
+        background-color: #e0f7e9;
+        color: #2e7d32;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
+        font-size: 14px;
+    }
+
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
+        font-size: 14px;
+    }
+
+    .performance {
+        display: flex;
+        gap: 20px;
+    }
+
+    .performance-box {
+        flex: 1;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .performance-box h3 {
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #888;
+    }
+
+    .performance-box p {
+        font-size: 24px;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .create-btn {
+        background: #eee;
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+    }

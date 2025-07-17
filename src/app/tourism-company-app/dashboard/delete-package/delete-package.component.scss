@@ -1,0 +1,25 @@
+.delete-dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.delete-dialog .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 20px;
+    margin: 0 auto;
+    height: 100px;
+    gap: 20px;
+}
+
+.delete-dialog button {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 8px;
+    width: 100px;
+}
