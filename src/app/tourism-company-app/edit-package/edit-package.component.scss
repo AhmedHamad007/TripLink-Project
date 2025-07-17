@@ -1,3 +1,7 @@
+.package-info {
+    position: relative;
+}
+
 .create-package .container {
     padding: 10px 50px;
 }
@@ -60,4 +64,11 @@ button {
     flex-direction: row;
     align-items: center;
     gap: 5px;
+}
+
+.loading-container {
+    margin-top: 50px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }

@@ -1,5 +1,10 @@
+ .recent-booking {
+     margin-bottom: 50px;
+ }
+
  .container {
      padding: 0 100px;
+     position: relative;
  }
 
  @media (max-width:767px) {
@@ -149,7 +154,7 @@
 
      .recent-booking th,
      .recent-booking td {
-         padding: 40px 15px;
+         padding: 30px 15px;
      }
 
      .recent-booking td {
@@ -190,6 +195,13 @@
 
  .recent-booking td[data-label="Actions"] p:last-child {
      cursor: pointer;
+ }
+
+ .loading-container {
+     margin-top: 50px;
+     position: absolute;
+     left: 50%;
+     transform: translateX(-50%);
  }
 
 

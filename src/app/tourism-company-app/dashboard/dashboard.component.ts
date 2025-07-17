@@ -4,12 +4,14 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Package } from '../interfaces/package';
 import { CompanyService } from '../services/company.service';
 import { DeletePackageComponent } from './delete-package/delete-package.component';
-
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterModule, MatDialogModule],
+  imports: [RouterModule, MatProgressSpinnerModule, CommonModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
+  standalone: true,
 })
 export class DashboardComponent implements OnInit {
 

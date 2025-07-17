@@ -4,6 +4,7 @@
         <h1>Booking Management</h1>
         <div class="incoming-bookings mt-5">
             <h2>Company Bookings</h2>
+            @defer (when bookings) {
             <table class="mt-5">
                 <tr>
                     <th>Customer Email</th>
@@ -36,6 +37,16 @@
                 </tr>
                 }
             </table>
+            }
+            @placeholder{
+            <div class="loading-container mt-5">
+                <mat-progress-spinner color="accent" diameter="40" mode="indeterminate"></mat-progress-spinner>
+            </div>
+            }@loading (minimum 2s){
+            <div class="loading-container mt-5">
+                <mat-progress-spinner color="accent" diameter="40" mode="indeterminate"></mat-progress-spinner>
+            </div>
+            }
         </div>
     </div>
 </div>

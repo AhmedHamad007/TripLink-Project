@@ -1,15 +1,14 @@
 import { Component, input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { TourismCompanyNavbarComponent } from "../tourism-company-navbar/tourism-company-navbar.component";
-import { ActivatedRoute, ActivatedRouteSnapshot, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CompanyService } from '../services/company.service';
 import { Destination, Package } from '../interfaces/package';
 import { FormsModule } from '@angular/forms';
-import { log } from 'console';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-edit-package',
-  imports: [RouterModule, FormsModule],
+  imports: [RouterModule, FormsModule, MatProgressSpinner],
   templateUrl: './edit-package.component.html',
   styleUrl: './edit-package.component.scss',
 })
@@ -18,6 +17,7 @@ export class EditPackageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private service: CompanyService) { }
 
   destinations: Destination[] = [];
+
 
   ngOnInit(): void {
     this.service.destinations$.subscribe(
