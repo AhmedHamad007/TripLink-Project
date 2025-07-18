@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth-service/Services/Auth/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { Iuser } from '../../../auth-service/Interfaces/iuser';
 
 @Component({
   selector: 'app-tourist-dashboard',
@@ -10,13 +11,13 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './tourist-dashboard.component.scss'
 })
 export class TouristDashboardComponent implements OnInit {
-user: any;
+user: Iuser | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.user = this.authService.userValue;
-    if (!this.user) {
+    if (!this.user || this.user.role !== 'Tourist') {
       this.router.navigate(['/login']);
     }
   }

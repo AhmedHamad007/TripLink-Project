@@ -3,11 +3,11 @@
     <h3 class="text-center mb-4" style="color: #c68919;">Tourist Dashboard</h3>
     <div class="card shadow-sm">
       <div class="card-body">
-        <h5 class="card-title">Welcome, {{ user?.name || 'Tourist' }}!</h5>
+        <h5 class="card-title">Welcome, {{ user?.email }}!</h5>
         <p class="card-text">You are logged in as a Tourist.</p>
         <ul class="list-group list-group-flush mb-3">
           <li class="list-group-item"><strong>Email:</strong> {{ user?.email || 'N/A' }}</li>
-          <li class="list-group-item"><strong>Nationality:</strong> {{ user?.nationality || 'N/A' }}</li>
+          <li class="list-group-item"><strong>role:</strong> {{ user?.role }}</li>
         </ul>
         <button class="btn btn-danger w-100" (click)="logout()">Logout</button>
       </div>

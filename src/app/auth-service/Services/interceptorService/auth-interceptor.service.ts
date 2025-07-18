@@ -15,14 +15,19 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   const token = localStorage.getItem('jwt');
   let clonedReq = req;
 
+  // Skip logging for login/register requests as they don't need tokens
+  const isAuthRequest = req.url.includes('/api/Account/login') || req.url.includes('/api/Account/register');
+  
   // Always add Authorization header if token exists
   if (token) {
     clonedReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`)
     });
-    console.log(`[${serviceId}] تم إضافة رأس Authorization إلى الطلب: ${req.url}`);
-  } else {
-    console.log(`[${serviceId}] لا يوجد رمز مميز للطلب: ${req.url}`);
+    if (!isAuthRequest) {
+      console.log(`[${serviceId}] Added Authorization header to request: ${req.url}`);
+    }
+  } else if (!isAuthRequest) {
+    console.log(`[${serviceId}] No token available for request: ${req.url}`);
   }
 
   return next(clonedReq).pipe(

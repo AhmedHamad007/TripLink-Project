@@ -23,28 +23,28 @@ export const routes: Routes = [
   { path: 'register' , component : RegisterComponent},
   { path: 'register/tourism-company', component: RegisterTourismCompanyComponent },
   { path: 'register/tourist-guide', component: RegisterTouristGuideComponent },
-  { path: 'register/tourist', component: RegisterTouristComponent },
+  { path: 'register/Tourist', component: RegisterTouristComponent },
   { path: 'register/hotel', component: RegisterHotelComponent },
   { path : 'login' , component : LoginComponent},
    { path: 'dashboard/tourist', 
     component: TouristDashboardComponent, 
     canActivate: [AuthGuardService], 
-    data: { role: 'tourist' } 
+    data: { role: 'Tourist' } 
   },
    { path: 'dashboard/tourist-guide', 
     component: TourGuideDashboardComponent, 
     canActivate: [AuthGuardService], 
-    data: { role: 'tourist_guide' } 
+    data: { role: 'TourGuide' } 
   },
    { path: 'dashboard/tourism-company', 
     component: TourismCompanyDashboardComponent, 
     canActivate: [AuthGuardService], 
-    data: { role: 'tourism_company' } 
+    data: { role: 'TourismCompany' } 
   },
    { path: 'dashboard/hotel', 
     component: HotelDashboardComponent, 
     canActivate: [AuthGuardService], 
-    data: { role: 'hotel' } 
+    data: { role: 'Hotel' } 
   },
   { path: '**', redirectTo: '' }
 ];

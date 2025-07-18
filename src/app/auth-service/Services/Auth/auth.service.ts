@@ -1,27 +1,16 @@
-import { IRegisterTourismCompanyData } from './../../Interfaces/iregister-tourism-company-data';
 import { NotificationServiceService } from './../NotificationService/notification-service.service';
 import { jwtDecode } from 'jwt-decode';
 import { Iuser } from './../../Interfaces/iuser';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, Inject, PLATFORM_ID, input, Output } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID,} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
-import { log, error } from 'console';
-import { IRegisterTouristData } from '../../Interfaces/iregister-tourist-data';
-import isEmail from 'validator/lib/isEmail';
-import { response } from 'express';
-import { IRegisterHotelData } from '../../Interfaces/iregister-hotel-data';
-import { IRegisterTourGuideData } from '../../Interfaces/iregister-tour-guide-data';
-import { UtilsService } from '../Utils/utils.service';
 
-interface LoginResponse {
-  token: string;
-  user: {
-    email: string;
-    role: string;
-  };
-}
+import isEmail from 'validator/lib/isEmail';
+
+
+import { UtilsService } from '../Utils/utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -130,18 +119,7 @@ login(email: string, password: string): Observable<{ success: boolean; user: Ius
           const decoded: any = jwtDecode(response.token);
           // Try to extract email and role from decoded token
           let role = decoded.role || decoded.roles || decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-          if (role) {
-            // Normalize possible backend values to your expected values
-            switch (role.toLowerCase().replace(/[\s-]/g, '')) {
-              case 'tourismcompany':
-                role = 'tourism_company';
-                break;
-              case 'touristguide':
-                role = 'tourist_guide';
-                break;
-              // Add other mappings if needed
-            }
-          }
+          // Keep the role as returned by backend (e.g., "Tourist", "TourismCompany", etc.)
           user = {
             email: decoded.email || decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],
             role: role
@@ -156,8 +134,9 @@ login(email: string, password: string): Observable<{ success: boolean; user: Ius
           role: user.role,
           token: response.token
         };
+        console.log(`[${this.serviceId}] User data extracted:`, userData);
         this.saveUserData(userData);
-        console.log(`[${this.serviceId}] Login successful: ${userData.email}`);
+        console.log(`[${this.serviceId}] Login successful: ${userData.email} with role: ${userData.role}`);
         this.notificationService.show('Login successful!');
         this.redirectToDashboard(userData.role);
         return { success: true, user: userData, jwt: userData.token };
@@ -211,21 +190,25 @@ logout(): Observable<{ success: boolean; message: string }> {
     );
   }
   public redirectToDashboard(role: string) {
-    const normalizedRole = role.toLowerCase();
-    switch (normalizedRole) {
+    switch (role) {
       case 'tourism_company':
+      case 'TourismCompany':
         this.router.navigate(['/dashboard/tourism-company']);
         break;
       case 'tourist_guide':
+      case 'TouristGuide':
+      case 'TourGuide':
         this.router.navigate(['/dashboard/tourist-guide']);
         break;
-      case 'tourist':
+      case 'Tourist':
         this.router.navigate(['/dashboard/tourist']);
         break;
       case 'hotel':
+      case 'Hotel':
         this.router.navigate(['/dashboard/hotel']);
         break;
       default:
+        console.log(`[${this.serviceId}] Unknown role: ${role}, redirecting to login`);
         this.router.navigate(['/login']);
     }
     console.log(`[${this.serviceId}] Redirecting to: ${role || 'login'}`);

@@ -18,13 +18,12 @@ export class TouristRegisterationService {
     private http: HttpClient,
     private router: Router,
     private notificationService: NotificationServiceService,
-    private AuthService : AuthService,
     private utilsService: UtilsService
   ) { }
   registerTourist (InputData : IRegisterTouristData) : Observable <{message : string , OutputData : any}>{
     if (!isEmail(InputData.email)){
-      console.error(`[${this.serviceId}] Failed to Add New Tourist , UnValid Email`);
-      return throwError(() => new Error ('Non Valid Email'))
+      console.error(`[${this.serviceId}] Failed to Add New Tourist , InValid Email`);
+      return throwError(() => new Error ('InValid Email'))
     }
     if (InputData.password.length<6) {
       console.error(`[${this.serviceId}] Failed to add new Tourist , Password is less than 6 char`)
@@ -42,10 +41,10 @@ export class TouristRegisterationService {
     };
     return this.http.post('/api/Account/register/tourist', Payload).pipe(
       map((response : any) => {
-        console.log(`[${this.serviceId}] Registerd succefuly ${InputData.email}`);
+        console.log(`[${this.serviceId}] Registered successfully ${InputData.email}`);
         this.notificationService.show('New tourist has been added');
         this.router.navigate(['/login']);
-        return { message: 'Registerd succefuly', OutputData : response };
+        return { message: 'Registered succefuly', OutputData : response };
       }),
       catchError((error) => this.utilsService.handleError(error , this.serviceId)))
       }
