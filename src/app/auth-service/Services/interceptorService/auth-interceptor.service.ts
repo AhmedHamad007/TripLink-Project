@@ -26,7 +26,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
     if (!isAuthRequest) {
       console.log(`[${serviceId}] Added Authorization header to request: ${req.url}`);
     }
-  } else if (!isAuthRequest) {
+  } else if (isAuthRequest) {
     console.log(`[${serviceId}] No token available for request: ${req.url}`);
   }
 

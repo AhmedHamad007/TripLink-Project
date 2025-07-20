@@ -15,7 +15,9 @@ img,
 span,
 input,
 button,
-ion-icon {display: block;}
+ion-icon {
+  display: block;
+}
 
 a {
   text-decoration: none;
@@ -23,11 +25,13 @@ a {
 }
 
 input,
-button {background: none;
+button {
+  background: none;
   border: none;
-font: inherit;}
+  font: inherit;
+}
 
-input{
+input {
   width: 100%;
   outline: none;
 }
@@ -37,7 +41,7 @@ button {
 }
 
 ion-icon {
- pointer-events: none;
+  pointer-events: none;
 }
 
 address {
@@ -49,13 +53,13 @@ html {
   font-size: 10px;
   scroll-behavior: smooth;
 }
+
 body {
   background-color: var(--bg-My-New);
   color: var(--text-granite-gray);
   font-size: var(--fontSize-6);
   line-height: 1.8;
   min-height: 100vh;
-  padding-top: var(--header-height);
   direction: ltr;
   scroll-behavior: smooth;
 }

@@ -1,4 +1,3 @@
-import { AuthService } from './../Auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -7,13 +6,12 @@ import { UtilsService } from '../Utils/utils.service';
 import { IRegisterTouristData } from '../../Interfaces/iregister-tourist-data';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import isEmail from 'validator/lib/isEmail';
-import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TouristRegisterationService {
-    private readonly serviceId = 'auth-service-' + Date.now();
+    private readonly serviceId = 'tourist-registration-service' + Date.now();
   constructor (
     private http: HttpClient,
     private router: Router,
@@ -29,6 +27,19 @@ export class TouristRegisterationService {
       console.error(`[${this.serviceId}] Failed to add new Tourist , Password is less than 6 char`)
       return throwError (() => new Error ('Password must be more than 6 Chars'))
     }
+       if (!InputData.firstName || !InputData.lastName) {
+    console.error(`[${this.serviceId}] Failed to add new Tourist, Missing required fields`);
+    return throwError(() => new Error('First name and last name are required'));
+    }
+    if (!/[a-z]/.test(InputData.password)) {
+      console.error(`[${this.serviceId}] Failed to add new Tourist, Password must contain at least one lowercase letter`);
+      return throwError(() => new Error('Password must contain at least one lowercase letter'));
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(InputData.password)) {
+      console.error(`[${this.serviceId}] Failed to add new Tourist, Password must contain at least one special character (e.g., @, #, $)`);
+      return throwError(() => new Error('Password must contain at least one special character (e.g., @, #, $)'));
+    }
+    
     const Payload = {
       firstName : InputData.firstName,
       lastName: InputData.lastName,
@@ -42,7 +53,7 @@ export class TouristRegisterationService {
     return this.http.post('/api/Account/register/tourist', Payload).pipe(
       map((response : any) => {
         console.log(`[${this.serviceId}] Registered successfully ${InputData.email}`);
-        this.notificationService.show('New tourist has been added');
+        this.notificationService.show(`Tourist ${InputData.email} has been added`);
         this.router.navigate(['/login']);
         return { message: 'Registered succefuly', OutputData : response };
       }),
