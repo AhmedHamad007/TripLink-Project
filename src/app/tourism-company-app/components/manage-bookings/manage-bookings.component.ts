@@ -2,13 +2,13 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CompanyService } from '../services/company.service';
 import { Booking } from '../interfaces/booking';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { TourismCompanyNavbarComponent } from '../tourism-company-navbar/tourism-company-navbar.component';
+import { MatProgressSpinner, MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-manage-bookings',
-  imports: [RouterModule, MatProgressSpinnerModule, CommonModule, TourismCompanyNavbarComponent],
+  imports: [RouterModule, MatProgressSpinner, CommonModule, TourismCompanyNavbarComponent, MatProgressSpinnerModule],
   templateUrl: './manage-bookings.component.html',
   styleUrl: './manage-bookings.component.scss',
   standalone: true,
