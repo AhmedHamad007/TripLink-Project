@@ -1,28 +1,44 @@
-<section class="container py-5" id="top-guides">
-     <h2 class="text-center mb-4" style="color: var(--text-gunmetal);">Highly Rated Tour Guides</h2>
-
-     <div id="topGuidesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-       <div class="carousel-inner">
-         <div class="carousel-item" *ngFor="let guide of topGuides; let i = index" [ngClass]="{'active': i === 0}">
-           <div class="card top-guide-card mx-auto">
-             <img [src]="guide.image" class="card-img-top" [alt]="guide.name">
-             <div class="card-body text-center">
-               <h5 class="card-title">{{ guide.name }}</h5>
-               <p>{{ guide.specialty }}</p>
-               <p class="text-warning">{{ guide.rating }}</p>
-             </div>
-           </div>
-         </div>
-       </div>
-
-       <!-- Arrows -->
-       <button class="carousel-control-prev" type="button" data-bs-target="#topGuidesCarousel" data-bs-slide="prev">
-         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-         <span class="visually-hidden">السابق</span>
-       </button>
-       <button class="carousel-control-next" type="button" data-bs-target="#topGuidesCarousel" data-bs-slide="next">
-         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-         <span class="visually-hidden">التالي</span>
-       </button>
-     </div>
-   </section>
+<app-navbar></app-navbar>
+<div class="container" >
+  <h2 class="title">Top Tour Guides</h2>
+  <div *ngIf="errorMessage" class="alert alert-error">{{ errorMessage }}</div>
+  <div *ngIf="topTourGuides.length === 0 && !errorMessage" class="alert alert-no-data">No top tour guides available.</div>
+  <div *ngIf="topTourGuides.length > 0" class="guides-list" style="display: flex; flex-direction: row;">
+    <div *ngFor="let guide of topTourGuides; let i = index" class="guide-item" >
+      <!-- Image Slider -->
+      <div class="image-slider">
+        <div *ngIf="!guide.photoUrls || guide.photoUrls.length === 0" class="no-image">
+          No images available
+        </div>
+        <div *ngIf="guide.photoUrls && guide.photoUrls.length > 0">
+          <img [src]="guide.photoUrls[currentImageIndices[i] || 0]" alt="guide-image" class="guide-image">
+          <div class="slider-controls" *ngIf="guide.photoUrls.length > 1">
+            <button class="slider-btn prev" (click)="prevImage(i)">❮</button>
+            <button class="slider-btn next" (click)="nextImage(i)">❯</button>
+          </div>
+        </div>
+      </div>
+      <div class="guide-details">
+        <h3 class="guide-title">{{ guide.guideName }}</h3>
+        <p class="guide-detail"><strong>Languages:</strong> {{ guide.languages }}</p>
+        <p class="guide-detail"><strong>Areas Covered:</strong> {{ guide.areasCovered }}</p>
+        <p class="guide-detail"><strong>Price per Hour:</strong> ${{ guide.pricePerHour }}</p>
+        <p class="availability">
+          <strong>Availability:</strong> 
+          <span [ngClass]="guide.isAvailable ? 'available' : 'unavailable'">
+            {{ guide.isAvailable ? 'Available' : 'Not Available' }}
+            <i [ngClass]="guide.isAvailable ? 'fa-solid fa-check' : 'fa-solid fa-times'" 
+               [class.available-icon]="guide.isAvailable" 
+               [class.unavailable-icon]="!guide.isAvailable"></i>
+          </span>
+        </p>
+        <div class="guide-rating">
+          <i class="fa-solid fa-star" *ngFor="let _ of getStarRatingArray(guide.averageRating)"></i>
+          <i class="fa-solid fa-star empty-star" *ngFor="let _ of getEmptyStarRatingArray(guide.averageRating)"></i>
+          <p>({{ guide.averageRating }} Stars)</p>
+        </div>
+        <button class="btn btn-primary" [routerLink]="['/tour-guide-details', guide.guideID]">View</button>
+      </div>
+    </div>
+  </div>
+</div>

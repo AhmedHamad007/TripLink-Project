@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { NavbarComponent } from '../../../../../../shared-app/Components/navbar/navbar.component';
 import { HotelsServiceService } from '../../Services/hotels-service.service';
-
+import { Hotel } from '../../interfaces/hotel';
 @Component({
   selector: 'app-all-hotels',
   standalone: true,
@@ -12,79 +12,108 @@ import { HotelsServiceService } from '../../Services/hotels-service.service';
   styleUrls: ['./all-hotels.component.scss']
 })
 export class AllHotelsComponent implements OnInit {
-  allProducts: any[] = [];
-  showedProducts: any[] = [];
-  city: string = 'All';
-  starRating: string = 'All';
-  price: string = 'All';
+  hotels: Hotel[] = [];
+  filteredHotels: Hotel[] = [];
+  errorMessage: string | null = null;
+  filters = {
+    city: 'All',
+    starRating: 'All',
+    price: 'All'
+  };
+  currentImageIndices: number[] = []; // Track current image index for each hotel
 
-  constructor(private hotelService: HotelsServiceService, private router: Router) {}
+  constructor(@Inject(HotelsServiceService) private hotelService: HotelsServiceService, private router: Router) {}
 
   ngOnInit(): void {
-    this.allProducts = this.hotelService.getHotels();
-    this.showedProducts = [...this.allProducts];
-    console.log('Initial products:', this.allProducts);
+    this.loadHotels();
+  }
+
+  loadHotels(): void {
+    this.hotelService.getAllHotels().subscribe({
+      next: (hotels) => {
+        console.log('Hotels received in AllHotelsComponent:', hotels);
+        this.hotels = hotels;
+        this.filteredHotels = [...hotels];
+         this.currentImageIndices = new Array(hotels.length).fill(0); // Initialize image indices
+
+        this.applyFilters();
+      },
+      error: (err) => {
+        console.error('Error in AllHotelsComponent:', err.message);
+        this.errorMessage = err.message;
+      }
+    });
+  }
+
+  extractCity(address: string): string {
+    const parts = address.split(',');
+    return parts.length > 1 ? parts[parts.length - 1].trim() : 'Unknown';
   }
 
   updateFilter(event: Event, filterType: string): void {
-    const target = event.target as HTMLSelectElement;
-    const value = target.value;
-
-    if (filterType === 'city') {
-      this.city = value;
-    } else if (filterType === 'starRating') {
-      this.starRating = value;
-    } else if (filterType === 'price') {
-      this.price = value;
-    }
-
-    console.log(`Filter updated: city=${this.city}, starRating=${this.starRating}, price=${this.price}`);
-    this.filterData();
+    const selectElement = event.target as HTMLSelectElement;
+    this.filters[filterType as keyof typeof this.filters] = selectElement.value;
+    this.applyFilters();
   }
 
-  filterData(): void {
-    this.showedProducts = [...this.allProducts];
+  applyFilters(): void {
+    let filtered = [...this.hotels];
 
-    console.log('Filtering with:', { city: this.city, starRating: this.starRating, price: this.price });
-
-    if (this.city !== 'All') {
-      this.showedProducts = this.showedProducts.filter(e => e.city === this.city);
+    // City filter
+    if (this.filters.city !== 'All') {
+      filtered = filtered.filter(hotel => this.extractCity(hotel.address) === this.filters.city);
     }
 
-    if (this.starRating !== 'All') {
-      const starRatingNum = parseInt(this.starRating);
-      this.showedProducts = this.showedProducts.filter(e => e.starRating === starRatingNum);
+    // Star rating filter
+    if (this.filters.starRating !== 'All') {
+      filtered = filtered.filter(hotel => Math.round(hotel.rating) === parseInt(this.filters.starRating));
     }
 
-    if (this.price !== 'All') {
-      if (this.price === 'Above 500$') {
-        this.showedProducts = this.showedProducts.filter(e => e.price > 500);
-      } else if (this.price === '300$-500$') {
-        this.showedProducts = this.showedProducts.filter(e => e.price > 300 && e.price <= 500);
-      } else if (this.price === 'Less Than 300$') {
-        this.showedProducts = this.showedProducts.filter(e => e.price < 300);
-      }
+    // Price filter (placeholder logic)
+    if (this.filters.price !== 'All') {
+      // Since price is not in API, use placeholder logic or update when price is available
+      filtered = filtered.filter(hotel => {
+        const placeholderPrice = 100; // Replace with actual price when available
+        if (this.filters.price === 'Above 500$') return placeholderPrice > 500;
+        if (this.filters.price === '300$-500$') return placeholderPrice >= 300 && placeholderPrice <= 500;
+        if (this.filters.price === 'Less Than 300$') return placeholderPrice < 300;
+        return true;
+      });
     }
 
-    console.log('Filtered products:', this.showedProducts);
+    this.filteredHotels = filtered;
   }
 
   getHotelSlug(hotelName: string): string {
-    return hotelName.toLowerCase().replace(/\s+/g, '-');
+    const hotel = this.hotels.find(h => h.hotelName === hotelName);
+    return hotel ? `${hotelName.toLowerCase().replace(/\s+/g, '-')}-${hotel.hotelID}` : '';
+  }
+
+  getStarRatingArray(rating: number): number[] {
+    return Array(Math.round(rating)).fill(0);
+  }
+
+  getEmptyStarRatingArray(rating: number): number[] {
+    return Array(5 - Math.round(rating)).fill(0);
   }
 
   goToDetails(index: number): void {
-    const hotel = this.showedProducts[index];
-    this.hotelService.setSelectedHotel(hotel);
-    const hotelNameSlug = this.getHotelSlug(hotel.hotel);
-    this.router.navigate(['/hotel-reservation', hotelNameSlug]);
+    const hotel = this.filteredHotels[index];
+    this.router.navigate(['/hotel-details', hotel.hotelID]);
   }
 
-  getStarRatingArray(starRating: number): number[] {
-    return Array(starRating).fill(0);
+
+  prevImage(index: number, event: Event): void {
+    event.stopPropagation(); // Prevent routerLink navigation
+    if (this.filteredHotels[index].photoUrls && this.filteredHotels[index].photoUrls.length > 0) {
+      this.currentImageIndices[index] = (this.currentImageIndices[index] - 1 + this.filteredHotels[index].photoUrls.length) % this.filteredHotels[index].photoUrls.length;
+    }
   }
 
-  getEmptyStarRatingArray(starRating: number): number[] {
-    return Array(5 - starRating).fill(0);
+  nextImage(index: number, event: Event): void {
+    event.stopPropagation(); // Prevent routerLink navigation
+    if (this.filteredHotels[index].photoUrls && this.filteredHotels[index].photoUrls.length > 0) {
+      this.currentImageIndices[index] = (this.currentImageIndices[index] + 1) % this.filteredHotels[index].photoUrls.length;
+    }
   }
 }

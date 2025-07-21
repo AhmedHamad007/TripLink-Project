@@ -1,103 +1,91 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, OnInit } from '@angular/core';
 import {  RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TourGuidesComponent } from '../tour-guides.component';
+import { TourGuide } from '../interfaces/tour-guide';
+import { TourGuideService } from '../Services/tour-guide.service';
+import { NavbarComponent } from "../../../../../shared-app/Components/navbar/navbar.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-all-tour-gudies',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, NavbarComponent, FormsModule],
   templateUrl: './all-tour-gudies.component.html',
   styleUrl: './all-tour-gudies.component.scss'
 })
-export class AllTourGudiesComponent {
-tourGuides = [
-    {
-      id: 'guide1',
-      name: 'Ahmed Mohamed Ali',
-      specialty: 'Egyptology',
-      image: 'images/Client-TourGuides/AllGuides/michael-dam-mEZ3PoFGs_k-unsplash.jpg',
-      skills: ['Ancient Egyptian History', 'Multilingual: Arabic & English', 'Certified National Guide'],
-      fixedTrips: ['Pyramids of Giza + Sphinx', 'Egyptian Museum', 'Khan El Khalili Market']
-    },
-    {
-      id: 'guide2',
-      name: 'Fatma ramy Hassan',
-      specialty: 'Nile Cruises',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Nile Cruise Management', 'Multilingual: Arabic & French', 'Expert in Egyptian Culture'],
-      fixedTrips: ['Luxor & Aswan Nile Cruise', 'Karnak Temple', 'Valley of the Kings']
-    },
-    {
-      id: 'guide3',
-      name: 'laila Gamal Monir',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Desert Safari Leadership', 'Multilingual: Arabic & English', 'Camping Expertise'],
-      fixedTrips: ['Bahariya Oasis Safari', 'White Desert', 'Bedouin Experience']
-    },
-    {
-      id: 'guide4',
-      name: 'Marwa Saad Nagy',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Desert Trip Organization', 'Multilingual: Arabic & Spanish', 'Photography Expertise'],
-      fixedTrips: ['Sinai Safari', 'Wadi Rumla', 'Black Desert Experience']
-    },
-    {
-      id: 'guide5',
-      name: 'Fady Gozef Nashat',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Desert Jeep Driving', 'Multilingual: Arabic & English', 'Astronomy Expertise'],
-      fixedTrips: ['Farafra Safari', 'Black Desert', 'Adventure Experience']
-    },
-    {
-      id: 'guide6',
-      name: 'Karim Yasser',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Adventure Planning', 'Multilingual: Arabic & German', 'Bedouin History Expertise'],
-      fixedTrips: ['Hurghada Safari', 'Wadi El-Hitan', 'Red Desert Experience']
-    },
-    {
-      id: 'guide7',
-      name: 'Karim Yasser',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Adventure Planning', 'Multilingual: Arabic & German', 'Bedouin History Expertise'],
-      fixedTrips: ['Hurghada Safari', 'Wadi El-Hitan', 'Red Desert Experience']
-    },
-    {
-      id: 'guide8',
-      name: 'Karim Yasser',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Adventure Planning', 'Multilingual: Arabic & German', 'Bedouin History Expertise'],
-      fixedTrips: ['Hurghada Safari', 'Wadi El-Hitan', 'Red Desert Experience']
-    },{
-      id: 'guide9',
-      name: 'Karim Yasser',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Adventure Planning', 'Multilingual: Arabic & German', 'Bedouin History Expertise'],
-      fixedTrips: ['Hurghada Safari', 'Wadi El-Hitan', 'Red Desert Experience']
-    },{
-      id: 'guide10',
-      name: 'Karim Yasser',
-      specialty: 'Desert Safaris',
-      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21',
-      skills: ['Adventure Planning', 'Multilingual: Arabic & German', 'Bedouin History Expertise'],
-      fixedTrips: ['Hurghada Safari', 'Wadi El-Hitan', 'Red Desert Experience']
-    },
-  ];
+export class AllTourGudiesComponent implements OnInit {
+  tourGuides: TourGuide[] = [];
+  filteredTourGuides: TourGuide[] = [];
+  availableLanguages: string[] = [];
+  selectedLanguage: string = '';
+  errorMessage: string | null = null;
+  currentImageIndices: number[] = [];
 
-selectedGuide: any = null;
+  constructor(@Inject(TourGuideService) private tourGuideService: TourGuideService) {}
 
-  openSlidePanel(guideId: string) {
-    this.selectedGuide = this.tourGuides.find(guide => guide.id === guideId) || null;
+  ngOnInit(): void {
+    this.loadTourGuides();
   }
 
-  closeSlidePanel() {
-    this.selectedGuide = null;
+   loadTourGuides(): void {
+    this.tourGuideService.getAllTourGuides().subscribe({
+      next: (guides) => {
+        console.log('Tour guides received in AllTourGuidesComponent:', guides);
+        this.tourGuides = guides;
+        this.filteredTourGuides = guides;
+        this.currentImageIndices = new Array(guides.length).fill(0); // Initialize image indices
+        this.extractLanguages();
+        console.log('Available languages:', this.availableLanguages);
+      },
+      error: (err) => {
+        console.error('Error in AllTourGuidesComponent:', err.message);
+        this.errorMessage = err.message;
+      }
+    });
+  }
+
+  extractLanguages(): void {
+    const languageSet = new Set<string>();
+    this.tourGuides.forEach(guide => {
+      if (guide.languages) {
+        guide.languages.split(',').forEach(lang => {
+          const trimmedLang = lang.trim();
+          if (trimmedLang) languageSet.add(trimmedLang);
+        });
+      }
+    });
+    this.availableLanguages = Array.from(languageSet).sort();
+  }
+
+  filterTourGuides(): void {
+    if (!this.selectedLanguage) {
+      this.filteredTourGuides = this.tourGuides;
+    } else {
+      this.filteredTourGuides = this.tourGuides.filter(guide => {
+        if (!guide.languages) return false;
+        const guideLanguages = guide.languages.split(',').map(lang => lang.trim().toLowerCase());
+        return guideLanguages.includes(this.selectedLanguage.toLowerCase());
+      });
+    }
+    console.log('Filtered tour guides:', this.filteredTourGuides);
+  }
+
+  getStarRatingArray(rating: number): number[] {
+    return Array(Math.round(rating)).fill(0);
+  }
+
+  getEmptyStarRatingArray(rating: number): number[] {
+    return Array(5 - Math.round(rating)).fill(0);
+  }
+  prevImage(index: number): void {
+    if (this.filteredTourGuides[index].photoUrls && this.filteredTourGuides[index].photoUrls.length > 0) {
+      this.currentImageIndices[index] = (this.currentImageIndices[index] - 1 + this.filteredTourGuides[index].photoUrls.length) % this.filteredTourGuides[index].photoUrls.length;
+    }
+  }
+
+  nextImage(index: number): void {
+    if (this.filteredTourGuides[index].photoUrls && this.filteredTourGuides[index].photoUrls.length > 0) {
+      this.currentImageIndices[index] = (this.currentImageIndices[index] + 1) % this.filteredTourGuides[index].photoUrls.length;
+    }
   }
 }

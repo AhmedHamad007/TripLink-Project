@@ -33,7 +33,7 @@ features = [
 
  // Static data for partners
   partners = [
-    { src: 'assets/images/partner1.png', alt: 'Partner 1' },
+    { src: 'destination-1.jpg', alt: 'Partner 1' },
     { src: 'assets/images/partner2.png', alt: 'Partner 2' },
     { src: 'assets/images/partner3.png', alt: 'Partner 3' },
     { src: 'assets/images/partner4.png', alt: 'Partner 4' }
