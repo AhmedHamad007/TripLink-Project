@@ -1,97 +1,77 @@
 <app-navbar></app-navbar>
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="w-100" style="max-width: 500px;">
-    <h3 class="text-center mb-4" style="color: #c68919;">Tour Guide Registration</h3>
-    <form #tourGuideForm="ngForm" (ngSubmit)="onSubmit(tourGuideForm)">
-      <div class="mb-3">
-        <label for="name" class="form-label">Full Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          name="name"
-          [(ngModel)]="tourGuideData.name"
-          required
-          #name="ngModel"
-          [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="name.invalid && (name.dirty || name.touched)">
-          Full Name is required.
+  <div class="w-100" style="max-width: 600px;">
+    <h3 class="text-center mb-4" style="color: #c68919;">Tourist Guide Registration</h3>
+    <form #guideForm="ngForm" (ngSubmit)="onSubmit(guideForm)">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="guideData.firstName" required #firstName="ngModel" [ngClass]="{'is-invalid': firstName.invalid && (firstName.dirty || firstName.touched)}">
+          <div class="invalid-feedback" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">First name is required.</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="guideData.lastName" required #lastName="ngModel" [ngClass]="{'is-invalid': lastName.invalid && (lastName.dirty || lastName.touched)}">
+          <div class="invalid-feedback" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">Last name is required.</div>
         </div>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          [(ngModel)]="tourGuideData.email"
-          required
-          email
-          #email="ngModel"
-          [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched)">
-          Please enter a valid email address.
-        </div>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="guideData.email" required email #email="ngModel" [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched) || errors.email}">
+        <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched) || errors.email">{{ errors.email || 'Please enter a valid email address.' }}</div>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="password"
-          name="password"
-          [(ngModel)]="tourGuideData.password"
-          required
-          minlength="6"
-          #password="ngModel"
-          [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched)">
-          Password must be at least 6 characters long.
-        </div>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="guideData.password" required minlength="6" #password="ngModel" [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched) || errors.password}">
+        <div class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched) || errors.password">{{ errors.password || 'Password must be at least 6 characters long.' }}</div>
       </div>
       <div class="mb-3">
-        <label for="specialty" class="form-label">Specialty</label>
-        <input
-          type="text"
-          class="form-control"
-          id="specialty"
-          name="specialty"
-          [(ngModel)]="tourGuideData.specialty"
-          required
-          #specialty="ngModel"
-          [ngClass]="{'is-invalid': specialty.invalid && (specialty.dirty || specialty.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="specialty.invalid && (specialty.dirty || specialty.touched)">
-          Specialty is required.
-        </div>
+        <label for="phoneNumber" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="guideData.phoneNumber" required #phoneNumber="ngModel" [ngClass]="{'is-invalid': phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)}">
+        <div class="invalid-feedback" *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">Phone number is required.</div>
       </div>
       <div class="mb-3">
-        <label for="languages" class="form-label">Languages</label>
-        <input
-          type="text"
-          class="form-control"
-          id="languages"
-          name="languages"
-          [(ngModel)]="tourGuideData.languages"
-          required
-          #languages="ngModel"
-          [ngClass]="{'is-invalid': languages.invalid && (languages.dirty || languages.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="languages.invalid && (languages.dirty || languages.touched)">
-          Languages are required.
-        </div>
+        <label for="address" class="form-label">Address</label>
+        <input type="text" class="form-control" id="address" name="address" [(ngModel)]="guideData.address" required #address="ngModel" [ngClass]="{'is-invalid': address.invalid && (address.dirty || address.touched)}">
+        <div class="invalid-feedback" *ngIf="address.invalid && (address.dirty || address.touched)">Address is required.</div>
       </div>
-      <button
-        type="submit"
-        class="btn btn-primary w-100"
-        style="background-color: #c68919; border-color: #c68919;"
-        [disabled]="tourGuideForm.invalid"
-      >
-        Register
+      <div class="mb-3">
+        <label for="guideName" class="form-label">Guide Name</label>
+        <input type="text" class="form-control" id="guideName" name="guideName" [(ngModel)]="guideData.guideName" required #guideName="ngModel" [ngClass]="{'is-invalid': guideName.invalid && (guideName.dirty || guideName.touched)}">
+        <div class="invalid-feedback" *ngIf="guideName.invalid && (guideName.dirty || guideName.touched)">Guide name is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="licenseNumber" class="form-label">License Number</label>
+        <input type="text" class="form-control" id="licenseNumber" name="licenseNumber" [(ngModel)]="guideData.licenseNumber" required #licenseNumber="ngModel" [ngClass]="{'is-invalid': licenseNumber.invalid && (licenseNumber.dirty || licenseNumber.touched)}">
+        <div class="invalid-feedback" *ngIf="licenseNumber.invalid && (licenseNumber.dirty || licenseNumber.touched)">License number is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="languages" class="form-label">Languages (comma separated)</label>
+        <input type="text" class="form-control" id="languages" name="languages" [(ngModel)]="guideData.languages" required #languages="ngModel" [ngClass]="{'is-invalid': languages.invalid && (languages.dirty || languages.touched)}">
+        <div class="invalid-feedback" *ngIf="languages.invalid && (languages.dirty || languages.touched)">Languages are required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="areasCovered" class="form-label">Areas Covered</label>
+        <input type="text" class="form-control" id="areasCovered" name="areasCovered" [(ngModel)]="guideData.areasCovered" required #areasCovered="ngModel" [ngClass]="{'is-invalid': areasCovered.invalid && (areasCovered.dirty || areasCovered.touched)}">
+        <div class="invalid-feedback" *ngIf="areasCovered.invalid && (areasCovered.dirty || areasCovered.touched)">Areas covered is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="pricePerHour" class="form-label">Price Per Hour</label>
+        <input type="number" class="form-control" id="pricePerHour" name="pricePerHour" [(ngModel)]="guideData.pricePerHour" required min="1" #pricePerHour="ngModel" [ngClass]="{'is-invalid': pricePerHour.invalid && (pricePerHour.dirty || pricePerHour.touched) || errors.pricePerHour}">
+        <div class="invalid-feedback" *ngIf="pricePerHour.invalid && (pricePerHour.dirty || pricePerHour.touched) || errors.pricePerHour">{{ errors.pricePerHour || 'Price per hour must be greater than 0.' }}</div>
+      </div>
+      <div class="mb-3">
+        <label for="contactEmail" class="form-label">Contact Email</label>
+        <input type="email" class="form-control" id="contactEmail" name="contactEmail" [(ngModel)]="guideData.contactEmail" required email #contactEmail="ngModel" [ngClass]="{'is-invalid': contactEmail.invalid && (contactEmail.dirty || contactEmail.touched)}">
+        <div class="invalid-feedback" *ngIf="contactEmail.invalid && (contactEmail.dirty || contactEmail.touched)">Contact email is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="contactPhone" class="form-label">Contact Phone</label>
+        <input type="text" class="form-control" id="contactPhone" name="contactPhone" [(ngModel)]="guideData.contactPhone" required #contactPhone="ngModel" [ngClass]="{'is-invalid': contactPhone.invalid && (contactPhone.dirty || contactPhone.touched)}">
+        <div class="invalid-feedback" *ngIf="contactPhone.invalid && (contactPhone.dirty || contactPhone.touched)">Contact phone is required.</div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" style="background-color: #c68919; border-color: #c68919;" [disabled]="guideForm.invalid || isLoading">
+        {{ isLoading ? 'Registering...' : 'Register' }}
       </button>
     </form>
     <div class="text-center mt-3">

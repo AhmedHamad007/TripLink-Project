@@ -1,103 +1,75 @@
 <app-navbar></app-navbar>
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="w-100" style="max-width: 500px;">
+  <div class="w-100" style="max-width: 600px;">
     <h3 class="text-center mb-4" style="color: #c68919;">Hotel Registration</h3>
     <form #hotelForm="ngForm" (ngSubmit)="onSubmit(hotelForm)">
-      <div class="mb-3">
-        <label for="name" class="form-label">Hotel Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          name="name"
-          [(ngModel)]="hotelData.name"
-          required
-          #name="ngModel"
-          [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="name.invalid && (name.dirty || name.touched)">
-          Hotel Name is required.
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="hotelData.firstName" required #firstName="ngModel" [ngClass]="{'is-invalid': firstName.invalid && (firstName.dirty || firstName.touched)}">
+          <div class="invalid-feedback" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">First name is required.</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="hotelData.lastName" required #lastName="ngModel" [ngClass]="{'is-invalid': lastName.invalid && (lastName.dirty || lastName.touched)}">
+          <div class="invalid-feedback" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">Last name is required.</div>
         </div>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          [(ngModel)]="hotelData.email"
-          required
-          email
-          #email="ngModel"
-          [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched)">
-          Please enter a valid email address.
-        </div>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="hotelData.email" required email #email="ngModel" [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched) || errors.email}">
+        <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched) || errors.email">{{ errors.email || 'Please enter a valid email address.' }}</div>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="password"
-          name="password"
-          [(ngModel)]="hotelData.password"
-          required
-          minlength="6"
-          #password="ngModel"
-          [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched)">
-          Password must be at least 6 characters long.
-        </div>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="hotelData.password" required minlength="6" #password="ngModel" [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched) || errors.password}">
+        <div class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched) || errors.password">{{ errors.password || 'Password must be at least 6 characters long.' }}</div>
       </div>
       <div class="mb-3">
-        <label for="stars" class="form-label">Star Rating</label>
-        <select
-          class="form-control"
-          id="stars"
-          name="stars"
-          [(ngModel)]="hotelData.stars"
-          required
-          #stars="ngModel"
-          [ngClass]="{'is-invalid': stars.invalid && (stars.dirty || stars.touched)}"
-        >
+        <label for="phoneNumber" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="hotelData.phoneNumber" required #phoneNumber="ngModel" [ngClass]="{'is-invalid': phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)}">
+        <div class="invalid-feedback" *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">Phone number is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input type="text" class="form-control" id="address" name="address" [(ngModel)]="hotelData.address" required #address="ngModel" [ngClass]="{'is-invalid': address.invalid && (address.dirty || address.touched)}">
+        <div class="invalid-feedback" *ngIf="address.invalid && (address.dirty || address.touched)">Address is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="hotelName" class="form-label">Hotel Name</label>
+        <input type="text" class="form-control" id="hotelName" name="hotelName" [(ngModel)]="hotelData.hotelName" required #hotelName="ngModel" [ngClass]="{'is-invalid': hotelName.invalid && (hotelName.dirty || hotelName.touched)}">
+        <div class="invalid-feedback" *ngIf="hotelName.invalid && (hotelName.dirty || hotelName.touched)">Hotel name is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="hotelAddress" class="form-label">Hotel Address</label>
+        <input type="text" class="form-control" id="hotelAddress" name="hotelAddress" [(ngModel)]="hotelData.hotelAddress" required #hotelAddress="ngModel" [ngClass]="{'is-invalid': hotelAddress.invalid && (hotelAddress.dirty || hotelAddress.touched)}">
+        <div class="invalid-feedback" *ngIf="hotelAddress.invalid && (hotelAddress.dirty || hotelAddress.touched)">Hotel address is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" [(ngModel)]="hotelData.description" required #description="ngModel" [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}"></textarea>
+        <div class="invalid-feedback" *ngIf="description.invalid && (description.dirty || description.touched)">Description is required.</div>
+      </div>
+      <div class="mb-3">
+        <label for="rating" class="form-label">Star Rating</label>
+        <select class="form-control" id="rating" name="rating" [(ngModel)]="hotelData.rating" required #rating="ngModel" [ngClass]="{'is-invalid': rating.invalid && (rating.dirty || rating.touched) || errors.rating}">
           <option value="" disabled>Select star rating</option>
-          <option value="1">1 Star</option>
-          <option value="2">2 Stars</option>
-          <option value="3">3 Stars</option>
-          <option value="4">4 Stars</option>
-          <option value="5">5 Stars</option>
+          <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{r}} Star{{r > 1 ? 's' : ''}}</option>
         </select>
-        <div class="invalid-feedback" *ngIf="stars.invalid && (stars.dirty || stars.touched)">
-          Star Rating is required.
-        </div>
+        <div class="invalid-feedback" *ngIf="rating.invalid && (rating.dirty || rating.touched) || errors.rating">{{ errors.rating || 'Star Rating is required (1-5).' }}</div>
       </div>
       <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input
-          type="text"
-          class="form-control"
-          id="location"
-          name="location"
-          [(ngModel)]="hotelData.location"
-          required
-          #location="ngModel"
-          [ngClass]="{'is-invalid': location.invalid && (location.dirty || location.touched)}"
-        >
-        <div class="invalid-feedback" *ngIf="location.invalid && (location.dirty || location.touched)">
-          Location is required.
-        </div>
+        <label for="contactEmail" class="form-label">Contact Email</label>
+        <input type="email" class="form-control" id="contactEmail" name="contactEmail" [(ngModel)]="hotelData.contactEmail" required email #contactEmail="ngModel" [ngClass]="{'is-invalid': contactEmail.invalid && (contactEmail.dirty || contactEmail.touched)}">
+        <div class="invalid-feedback" *ngIf="contactEmail.invalid && (contactEmail.dirty || contactEmail.touched)">Contact email is required.</div>
       </div>
-      <button
-        type="submit"
-        class="btn btn-primary w-100"
-        style="background-color: #c68919; border-color: #c68919;"
-        [disabled]="hotelForm.invalid"
-      >
-        Register
+      <div class="mb-3">
+        <label for="contactPhone" class="form-label">Contact Phone</label>
+        <input type="text" class="form-control" id="contactPhone" name="contactPhone" [(ngModel)]="hotelData.contactPhone" required #contactPhone="ngModel" [ngClass]="{'is-invalid': contactPhone.invalid && (contactPhone.dirty || contactPhone.touched)}">
+        <div class="invalid-feedback" *ngIf="contactPhone.invalid && (contactPhone.dirty || contactPhone.touched)">Contact phone is required.</div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" style="background-color: #c68919; border-color: #c68919;" [disabled]="hotelForm.invalid || isLoading">
+        {{ isLoading ? 'Registering...' : 'Register' }}
       </button>
     </form>
     <div class="text-center mt-3">

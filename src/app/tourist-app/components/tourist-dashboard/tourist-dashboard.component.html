@@ -1,19 +1,97 @@
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="w-100" style="max-width: 600px;">
-    <h3 class="text-center mb-4" style="color: #c68919;">Tourist Dashboard</h3>
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Welcome, {{ user?.name || 'Tourist' }}!</h5>
-        <p class="card-text">You are logged in as a Tourist.</p>
-        <ul class="list-group list-group-flush mb-3">
-          <li class="list-group-item"><strong>Email:</strong> {{ user?.email || 'N/A' }}</li>
-          <li class="list-group-item"><strong>Nationality:</strong> {{ user?.nationality || 'N/A' }}</li>
-        </ul>
-        <button class="btn btn-danger w-100" (click)="logout()">Logout</button>
+<app-tourist-navbar></app-tourist-navbar>
+<div class="dashboard-bg">
+  <div class="container py-5">
+    <div class="welcome-section mb-4">
+      <h2 class="fw-bold mb-1">Welcome back, {{ (user?.email ?? 'Tourist').split('@')[0] }}!</h2>
+      <p class="text-muted">Explore Egypt's wonders with personalized recommendations and quick access to your travel plans.</p>
+    </div>
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-4" role="tablist">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#browse">Browse Packages</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#custom">Build Custom Trip</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#bookings">My Bookings</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#reviews">My Reviews</a></li>
+    </ul>
+    <!-- Personalized Recommendations -->
+    <div class="recommendations-section mb-5">
+      <h4 class="fw-bold mb-3">Personalized Recommendations</h4>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let trip of highRatedTrips">
+          <div class="card h-100 shadow-sm clickable" (click)="bookTrip(trip)">
+            <img *ngIf="trip.photoUrls && trip.photoUrls.length" [src]="trip.photoUrls[0]" class="card-img-top" alt="Trip Photo">
+            <div class="card-body">
+              <h5 class="card-title">{{ trip.packageName }}</h5>
+              <p class="card-text">{{ trip.description }}</p>
+              <button class="btn btn-outline-primary btn-sm mt-2" (click)="$event.stopPropagation(); bookTrip(trip)">Book Now</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="text-center mt-3">
-      <small class="text-muted">Want to explore more? <a [routerLink]="['/register']">Register another account</a></small>
+    <!-- Trip Booking Modal/Form -->
+    <div class="modal show d-block" tabindex="-1" *ngIf="bookingTrip">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Book Trip: {{ bookingTrip.packageName }}</h5>
+            <button type="button" class="btn-close" (click)="cancelTripBooking()"></button>
+          </div>
+          <form (ngSubmit)="submitTripBooking(tripBookingForm.value)" #tripBookingForm="ngForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="tripBookingDate" class="form-label">Booking Date</label>
+                <input type="date" id="tripBookingDate" name="bookingDate" class="form-control" ngModel required />
+              </div>
+              <div *ngIf="bookingError" class="alert alert-danger">{{ bookingError }}</div>
+              <div *ngIf="bookingSuccess" class="alert alert-success">{{ bookingSuccess }}</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="cancelTripBooking()">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="bookingInProgress || tripBookingForm.invalid">Book</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End Trip Booking Modal/Form -->
+    <!-- Browse Packages Tab -->
+    <div class="tab-content mb-5">
+      <div class="tab-pane fade show active" id="browse">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col" *ngFor="let trip of allPackages">
+            <div class="card h-100 shadow-sm">
+              <img *ngIf="trip.photoUrls && trip.photoUrls.length" [src]="trip.photoUrls[0]" class="card-img-top" alt="Trip Photo">
+              <div class="card-body">
+                <h5 class="card-title">{{ trip.packageName }}</h5>
+                <p class="card-text">{{ trip.description }}</p>
+                <button class="btn btn-outline-primary btn-sm mt-2" (click)="bookTrip(trip)">Book Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="custom">
+        <p>Start building your personalized Egypt adventure!</p>
+      </div>
+      <div class="tab-pane fade" id="bookings">
+        <p>Your current and past bookings will be shown here.</p>
+      </div>
+      <div class="tab-pane fade" id="reviews">
+        <p>Share and view your trip reviews.</p>
+      </div>
+    </div>
+    <!-- Happy Moments Section -->
+    <div class="happy-moments-section mt-5">
+      <h5 class="fw-bold mb-3">Share your happy moments with us</h5>
+      <input type="file" (change)="onPhotoSelected($event)" multiple accept="image/*" class="form-control mb-3" />
+      <div *ngIf="photos.length > 0; else noPhotos">
+        <div class="gallery d-flex flex-wrap justify-content-center">
+          <img *ngFor="let photo of photos" [src]="photo" class="happy-photo m-2" style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #eee;" />
+        </div>
+      </div>
+      <ng-template #noPhotos>
+        <p class="text-center text-muted">You don't have happy moments yet!</p>
+      </ng-template>
     </div>
   </div>
 </div>

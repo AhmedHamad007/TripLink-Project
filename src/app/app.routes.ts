@@ -11,18 +11,8 @@ import { LoginComponent } from './auth-service/Components/login/login.component'
 import { RegisterTouristComponent } from './auth-service/Components/register-tourist/register-tourist.component';
 import { TouristDashboardComponent } from './tourist-app/components/tourist-dashboard/tourist-dashboard.component';
 import { TourGuideDashboardComponent } from './tour-guides-app/components/tour-guide-dashboard/tour-guide-dashboard.component';
-import { TourismCompanyDashboardComponent } from './tourism-company-app/components/tourism-company-dashboard/tourism-company-dashboard.component';
 import { HotelDashboardComponent } from './hotels-app/components/hotel-dashboard/hotel-dashboard.component';
 import { AuthGuardService } from './auth-service/Services/AuthGuard/auth-guard.service';
-import { RoomDetailsComponent } from './client-app/Features/Hotels/main-page/Components/room-details/room-details.component';
-import { TopTourGuidesComponent } from './client-app/Features/Tour-Guides/tour-guides/top-tour-guides/top-tour-guides.component';
-import { TourGuideDetailsComponent } from './client-app/Features/Tour-Guides/tour-guides/tour-guide-details/tour-guide-details.component';
-import { HotelBookingComponent } from './client-app/Features/Hotels/main-page/Components/hotel-booking/hotel-booking.component';
-import { TourGuideBookingComponent } from './client-app/Features/Tour-Guides/tour-guides/tour-guide-booking/tour-guide-booking.component';
-import { AllPackagesComponent } from './client-app/Features/tour-packages/all-packages/all-packages.component';
-import { TourPackagesComponent } from './client-app/Features/tour-packages/tour-packages.component';
-import { PackageDetailsComponent } from './client-app/Features/tour-packages/package-details/package-details.component';
-import { PackageBookingComponent } from './client-app/Features/tour-packages/package-booking/package-booking.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,20 +31,28 @@ export const routes: Routes = [
   { path: 'register' , component : RegisterComponent},
   { path: 'register/tourism-company', component: RegisterTourismCompanyComponent },
   { path: 'register/tourist-guide', component: RegisterTouristGuideComponent },
-  { path: 'register/tourist', component: RegisterTouristComponent },
+  { path: 'register/Tourist', component: RegisterTouristComponent },
   { path: 'register/hotel', component: RegisterHotelComponent },
   { path : 'login' , component : LoginComponent},
-  { path: 'dashboard/tourist',component: TouristDashboardComponent, canActivate: [AuthGuardService], 
+   { path: 'dashboard/tourist', 
+    component: TouristDashboardComponent, 
+    canActivate: [AuthGuardService], 
     data: { role: 'tourist' } 
   },
-  { path: 'dashboard/tourist-guide',component: TourGuideDashboardComponent,canActivate: [AuthGuardService], 
+   { path: 'dashboard/tourist-guide', 
+    component: TourGuideDashboardComponent, 
+    canActivate: [AuthGuardService], 
     data: { role: 'tourist_guide' } 
   },
-  { path: 'dashboard/tourism-company',component: TourismCompanyDashboardComponent,canActivate: [AuthGuardService], 
+   { path: 'dashboard/tourism-company', 
+    component: TourismCompanyDashboardComponent, 
+    canActivate: [AuthGuardService], 
     data: { role: 'tourism_company' } 
   },
-  { path: 'dashboard/hotel', 
-    component: HotelDashboardComponent,canActivate: [AuthGuardService],data: { role: 'hotel' } 
+   { path: 'dashboard/hotel', 
+    component: HotelDashboardComponent, 
+    canActivate: [AuthGuardService], 
+    data: { role: 'hotel' } 
   },
   { path: '**', redirectTo: '' }
 ];

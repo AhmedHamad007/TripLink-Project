@@ -1,0 +1,38 @@
+<app-tourism-company-navbar></app-tourism-company-navbar>
+<!-- Start Of Create Package  -->
+<div class="create-package pt-5 mb-2">
+    <div class="container">
+        <h1 class="pt-3">Create New Tour Package</h1>
+        <p class="pt-3">Follow the steps below to create a new tour package for your company.</p>
+        <div class="package-info pt-3">
+            <h2 class="pt-3">Package Information</h2>
+            <form (ngSubmit)="createPackage()">
+                <label class="mt-4">Package Name</label>
+                <input type="text" placeholder="Enter Package Name" name="packageName"
+                    [(ngModel)]="package.packageName">
+                <label class="mt-5">Package Description</label>
+                <textarea rows="10" placeholder="Enter Package Description" [(ngModel)]="package.description"
+                    name="description"></textarea>
+                <label class="mt-5">Price</label>
+                <input type="number" placeholder="Enter Package Price" name="price" [(ngModel)]="package.price">
+                <label class="mt-5">Destinations</label>
+                <div class="dest-checkboxes">
+                    @for (item of destinations; track $index) {
+                    <div class="dest-checkbox">
+                        <input type="checkbox" name="dest"
+                            (change)="addOrRemoveDestination(item.destinationId,$event)"><label>{{item.location}}</label><br>
+                    </div>
+                    }
+                </div>
+
+                <label class="mt-5">Start Date</label>
+                <input type="date" placeholder="Enter Package Start Date" name="startDate"
+                    [(ngModel)]="package.startDate">
+                <label class="mt-5">End Date</label>
+                <input type="date" placeholder="Enter Package End Date" name="endDate" [(ngModel)]="package.endDate">
+                <button class="ms-auto" type="submit">Next</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Of Create Package  -->
