@@ -4,10 +4,28 @@
         <h1 class="pt-3">Create New Tour Package</h1>
         <p class="pt-3">Follow the steps below to create a new tour package for your company.</p>
         <div class="package-info pt-3">
-            <h2 class="pt-3">Package Information</h2>
+            <h2>Package Information</h2>
             @defer (when package){
+            @if(package.photoUrls?.length !== 0){
+            <h2 class="mt-5">Package Images</h2>
+            <div class="photo-slider">
+                @for (item of package.photoUrls; track $index) {
+                <div class="photo">
+                    <img [src]="item" alt="Profile Photo" />
+                    <button (click)="removeImage(item)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                            width="24" height="24">
+                            <path
+                                d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                        </svg>
+                    </button>
+                </div>
+                }
+            </div>
+            }@else {
+            <h2 class="mt-5">Package Has No Photos</h2>
+            }
             <form (ngSubmit)="saveData()">
-                <label class="mt-4">Package Name</label>
+                <label class="mt-5">Package Name</label>
                 <input type="text" placeholder="Enter Package Name" [(ngModel)]="package.packageName"
                     name="packageName">
                 <label class="mt-5">Package Description</label>
@@ -20,7 +38,7 @@
                     @for (item of destinations; track $index) {
                     <div class="dest-checkbox">
                         <input type="checkbox" name="dest" [checked]="isDestinationChecked(item.destinationId)"
-                            (change)="addOrRemoveDestination(item.destinationId,$event)"><label>{{item.location}}</label><br>
+                            (change)="addOrRemoveDestination(item.destinationId,$event)"><label>{{item.name}}</label><br>
                     </div>
                     }
                 </div>

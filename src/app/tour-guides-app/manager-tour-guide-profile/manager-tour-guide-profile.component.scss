@@ -1,5 +1,5 @@
 label {
-    margin-top: 10px;
+    margin-top: 12px;
     color: black;
 }
 
@@ -40,14 +40,23 @@ button {
 
 
 @media (max-width:767px) {
+
     .manage-profile .container {
         padding: 0 20px;
+    }
+
+    .manage-profile .container,
+    .language-labels,
+    .destination-labels {
         width: 100%;
     }
 }
 
 @media (max-width:575px) {
-    .manage-profile .container {
+
+    .manage-profile .container,
+    .language-labels,
+    .destination-labels {
         width: 80%;
     }
 }
@@ -58,12 +67,72 @@ button {
         padding: 0 20px;
     }
 
-    input,
-    label {
-        width: 50%;
-    }
-
     textarea {
-        width: 50.1%;
+        width: 100%;
     }
+}
+
+.spinner {
+    width: 100%;
+    position: relative;
+}
+
+.spinner mat-progress-spinner {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.language-labels,
+.destination-labels {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+.language-label,
+.destination-label {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
+.language-label input,
+.destination-label input {
+    width: 20px;
+    height: 20px;
+}
+
+.language-label label,
+.destination-label label {
+    margin-top: 0;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+    width: 100%;
+    height: 200px;
+}
+
+.photo-slider {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.photo-slider img {
+    height: 100px;
+    border-radius: 7px;
+    width: 100%;
+    border: 1px solid black;
+    object-fit: cover;
+}
+
+.photo {
+    position: relative;
 }

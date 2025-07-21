@@ -11,12 +11,8 @@
     <div class="container">
         <div class="dashboard-card">
             <h2>Total Packages</h2>
-            @defer (when numberOfPackages) {
+            @defer (when isPackagesReqFinished) {
             <p>{{numberOfPackages}}</p>
-            }@placeholder {
-            <div class="mt-5">
-                <mat-progress-spinner color="accent" diameter="40" mode="indeterminate"></mat-progress-spinner>
-            </div>
             }
             @loading (minimum 2s){
             <div class="mt-5">
@@ -26,9 +22,9 @@
         </div>
         <div class="dashboard-card">
             <h2>Active Bookings</h2>
-            @defer (when activeBookingsNumber) {
+            @defer (when isBookingsReqFinished) {
             <p>{{activeBookingsNumber}}</p>
-            }@placeholder{
+            }@placeholder(minimum 2s){
             <div class="mt-5">
                 <mat-progress-spinner color="accent" diameter="40" mode="indeterminate"></mat-progress-spinner>
             </div>
@@ -41,7 +37,7 @@
         </div>
         <div class="dashboard-card">
             <h2>Revenue</h2>
-            @defer (when price) {
+            @defer (when isBookingsReqFinished) {
             <p>{{price}}$</p>
             }@placeholder{
             <div class="mt-5">
@@ -75,7 +71,8 @@
 <!-- Start Of Recent Booking  -->
 <div class="recent-booking mb-2">
     <div class="container mt-5">
-        @defer (when packages) {
+        @defer (when isPackagesReqFinished) {
+        @if(packages.length > 0){
         <table class="mb-3">
             <tr>
                 <th>Package Name</th>
@@ -102,18 +99,18 @@
                     <p><a [routerLink]="['/company/edit-package',item.packageId]">
                             Edit
                         </a></p>
-                    <p (click)="openDeleteDialog(item.packageId)">Delete</p>
+                    <p (click)="openDeleteDialog(item.packageId,'Package')">Delete</p>
                 </td>
             </tr>
             }
         </table>
-        }
-        @loading (minimum 2s){
+        }@else{
         <div class="loading-container mt-5">
-            <mat-progress-spinner color="accent" diameter="40" mode="indeterminate"></mat-progress-spinner>
+            <h2>Company Has No Packages</h2>
         </div>
         }
-        @placeholder{
+        }
+        @loading (minimum 2s){
         <div class="loading-container mt-5">
             <mat-progress-spinner color="accent" diameter="40" mode="indeterminate"></mat-progress-spinner>
         </div>

@@ -73,6 +73,10 @@ td[data-label="Status"] p {
         width: 100%;
     }
 
+    tr td:last-child {
+        border-bottom: 3px solid black;
+    }
+
     td {
         display: block;
         width: 100%;

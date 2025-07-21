@@ -7,5 +7,5 @@ export interface Booking {
     packageName: string;
     bookingDate: string;
     totalPrice: number;
-    status: 'Pending' | 'Complete' | 'Waiting';
+    status: string;
 }

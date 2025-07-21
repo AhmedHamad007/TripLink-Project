@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { ClientAppModule } from './client-app/client-app.module';
-import { SharedAppModule } from './shared-app/shared-app.module';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet ,  ClientAppModule , SharedAppModule , RouterModule ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  imports: [RouterOutlet],
 })
 export class AppComponent {
   title = 'TripLink';

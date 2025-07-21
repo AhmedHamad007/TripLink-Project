@@ -10,6 +10,7 @@ export interface Package {
     companyName: string;
     destinations?: Destination[];
     destinationIds?: String[];
+    photoUrls?: string[],
 }
 
 export interface Destination {

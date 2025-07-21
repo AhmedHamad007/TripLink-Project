@@ -1,0 +1,28 @@
+<app-tourist-component-navbar></app-tourist-component-navbar>
+<div class="manage-profile mb-4">
+    <div class="container">
+        <h1 class="mt-5">Profile</h1>
+        <p>Manage your Profile details</p>
+        @defer (when isTouristReqFinished) {
+        <form (ngSubmit)="editProfile()">
+            <label>First name</label>
+            <input type="text" placeholder="Enter User First Name" [(ngModel)]="tourist.name.split(' ')[0]"
+                name="first-name">
+            <label>Last Name</label>
+            <input type="text" placeholder="Enter User Last Name" [(ngModel)]="tourist.name.split(' ')[1]"
+                name="last-name">
+            <!-- <label>Email</label>
+            <input type="email" placeholder="Enter Your Email" [(ngModel)]="tourist.email" name="email"> -->
+            <button class="ms-auto" type="submit">Save Changes</button>
+        </form>
+        }@placeholder {
+        <div class="spinner">
+            <mat-progress-spinner diameter="40" color="accent" mode="indeterminate"></mat-progress-spinner>
+        </div>
+        }@loading(minimum 3s) {
+        <div class="spinner">
+            <mat-progress-spinner diameter="40" color="accent" mode="indeterminate"></mat-progress-spinner>
+        </div>
+        }
+    </div>
+</div>

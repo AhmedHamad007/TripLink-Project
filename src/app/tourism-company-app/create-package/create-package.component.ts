@@ -1,21 +1,38 @@
 import { Package } from './../interfaces/package';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CompanyService } from '../services/company.service';
 import { Destination } from '../interfaces/package';
 import { FormsModule } from '@angular/forms';
-import { log } from 'console';
+import { CommonModule } from '@angular/common';
+import { AlertDialogComponent } from '../../alert-dialog-component/alert-dialog-component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-package',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './create-package.component.html',
   styleUrl: './create-package.component.scss'
 })
 export class CreatePackageComponent implements OnInit {
+  removeImage(index: number) {
+    this.photoPreviews.splice(index, 1);
+    this.photos.splice(index, 1);
+    if (this.photoPreviews.length === 0) {
+      this.fileInput.nativeElement.value = '';
+    }
 
-  constructor(private service: CompanyService) { }
+  }
+
+  constructor(private service: CompanyService, private matDialog: MatDialog) { }
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   destinations: Destination[] = [];
+
+  photos: File[] = [
+  ];
+
+  photoPreviews: string[] = [];
 
   package: Package = {
     packageId: '1',
@@ -27,8 +44,7 @@ export class CreatePackageComponent implements OnInit {
     startDate: '',
     endDate: '',
     companyName: '',
-    destinationIds: [
-    ]
+    destinationIds: [],
   };
 
   ngOnInit(): void {
@@ -36,24 +52,42 @@ export class CreatePackageComponent implements OnInit {
       next: (value) => {
         this.destinations = value;
       },
+      error: (err) => {
+        let message = '';
+        err['error']['errors'].map((e: string) => message += e + '\n');
+        this.matDialog.open(AlertDialogComponent, {
+          data: {
+            title: 'Error',
+            message: message
+          }
+        });
+      },
     });
     this.service.getDestinations();
   }
 
   createPackage() {
     this.package.durationDays = this.calculateDaysDifference(this.package.startDate, this.package.endDate);
-    this.package.companyName = 'Egypt Adventures';
-    console.log("dests ids : " + this.package.destinationIds);
-    console.log("dests : " + this.package.destinations);
+    const formData = this.toFormData(this.package);
+    this.photos.map((e) => formData.append('Photos', e));
+    this.package.destinationIds!.map((e) => formData.append('DestinationIds', e.toString()));
+    formData.delete('destinationIds')
 
-    this.service.createPackage(this.package).subscribe(
+    this.service.createPackage(formData).subscribe(
       {
 
         next: (val) => {
           alert("Package Created Successfully!");
         },
         error: (error) => {
-          alert(error.message);
+          let message = '';
+          error['error']['errors'].map((e: string) => message += e + '\n');
+          this.matDialog.open(AlertDialogComponent, {
+            data: {
+              title: 'Error',
+              message: message
+            }
+          });
         }
       }
     );
@@ -73,8 +107,6 @@ export class CreatePackageComponent implements OnInit {
 
   addOrRemoveDestination(id: string, event: Event) {
     const checkbox = event.target as HTMLInputElement;
-
-
     if (checkbox.checked) {
       if (!this.package.destinationIds?.includes(id)) {
         this.package.destinationIds?.push(id);
@@ -82,6 +114,34 @@ export class CreatePackageComponent implements OnInit {
     } else {
       this.package.destinationIds = this.package.destinationIds?.filter(destId => destId !== id);
     }
+    console.log('des changes : ' + this.package.destinationIds);
+
   }
 
+  addImagesToPackage(event: Event) {
+    this.photos = [];
+    const input = event.target as HTMLInputElement;
+    if (input.files != null && input.files.length > 0) {
+      for (let index = 0; index < input.files.length; index++) {
+        this.photos.push(input.files[index]);
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          this.photoPreviews.push(result);
+        };
+        reader.readAsDataURL(input.files[index]);
+      }
+    }
+    console.log('number of photos : ' + this.photos.length);
+  }
+
+  toFormData(obj: Record<string, any>): FormData {
+    const formData = new FormData();
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, value.toString());
+      }
+    });
+    return formData;
+  }
 }
