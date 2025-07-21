@@ -127,5 +127,5 @@ export const routes: Routes = [
     canActivate: [AuthGuardService], 
     data: { role: 'Hotel' } 
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'tour-guides' }
 ];
