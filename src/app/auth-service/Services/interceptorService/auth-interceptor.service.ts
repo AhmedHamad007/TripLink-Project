@@ -34,9 +34,9 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
         console.error(`[${serviceId}] 401 Error: Invalid or expired token`);
-        notificationService.show('Your session has expired, please log in again');
-        authService.clearUserData();
-        router.navigate(['/login']);
+        // notificationService.show('Your session has expired, please log in again');
+        // authService.clearUserData();
+        // router.navigate(['/login']);
       } else if (error.status === 403) {
         console.error(`[${serviceId}] 403 Error: Unauthorized access to: ${req.url}`);
         notificationService.show('You are not authorized to access this resource');

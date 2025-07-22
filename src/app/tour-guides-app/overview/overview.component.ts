@@ -2,10 +2,10 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Component, inject, OnInit } from '@angular/core';
 import { TourGuideService } from '../tour-guide.service';
 import { DashBoard } from '../interfaces/dashboard';
-import { log } from 'console';
 import { CommonModule } from '@angular/common';
 import { AlertDialogComponent } from '../../alert-dialog-component/alert-dialog-component';
 import { MatDialog } from '@angular/material/dialog';
+import { TourGuideNavbarComponent } from "../tour-guide-navbar/tour-guide-navbar.component";
 
 @Component({
   selector: 'app-overview',

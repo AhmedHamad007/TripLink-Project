@@ -81,7 +81,6 @@ export class AuthService {
   public get userValue() : Iuser | null {
     const user = this.userSubject.value;
     if (!user || !user.token) {
-      console.log(`[${this.serviceId}] InValid User`);
       return null ;
     }
     const Decoded : any = jwtDecode (user.token) ;
@@ -197,7 +196,7 @@ logout(): Observable<{ success: boolean; message: string }> {
         break;
       case 'tourist_guide':
       case 'TourGuide':
-        this.router.navigate(['/dashboard/tourist-guide']);
+        this.router.navigate(['/tour-guide/overview']);
         break;
       case 'Tourist':
       case 'tourist':
@@ -205,7 +204,7 @@ logout(): Observable<{ success: boolean; message: string }> {
         break;
       case 'hotel':
       case 'Hotel':
-        this.router.navigate(['/dashboard/hotel']);
+        this.router.navigate(['/hotel']);
         break;
       default:
         console.log(`[${this.serviceId}] Unknown role: ${role}, redirecting to login`);

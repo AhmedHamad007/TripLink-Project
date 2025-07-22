@@ -7,7 +7,7 @@ import { TourGuide } from '../interfaces/tour-guide';
   providedIn: 'root'
 })
 export class TourGuideService {
-private apiUrl = 'https://fizo.runasp.net/api/TourGuides';
+private apiUrl = '/api/TourGuides';
 
   constructor(private http: HttpClient) {}
 
@@ -27,14 +27,14 @@ private apiUrl = 'https://fizo.runasp.net/api/TourGuides';
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred while fetching tour guide data.';
-    if (error.error instanceof ErrorEvent) {
+    if (error.error && typeof error.error === 'object' && 'message' in error.error) {
       errorMessage = `Client Error: ${error.error.message}`;
+    } else if (error.error && error.error.Errors && Array.isArray(error.error.Errors)) {
+      errorMessage = `Server Error: ${error.error.Errors.join(', ')}`;
+    } else if (error.error && typeof error.error === 'string') {
+      errorMessage = `Server Error: ${error.error}`;
     } else {
-      if ((error.status === 400 || error.status === 404) && error.error.Errors) {
-        errorMessage = `Server Error: ${error.error.Errors.join(', ')}`;
-      } else {
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      }
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message || 'Unknown error'}`;
     }
     console.error('API Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
