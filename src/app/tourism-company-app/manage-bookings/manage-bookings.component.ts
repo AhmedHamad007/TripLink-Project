@@ -43,6 +43,6 @@ export class ManageBookingsComponent implements OnInit {
         });
       }
     });
-    this.bookingService.getCompanyBookings("khaled.mahmoud@example.com");
+    this.bookingService.getCompanyBookings();
   }
 }

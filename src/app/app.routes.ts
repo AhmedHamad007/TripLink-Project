@@ -1,3 +1,4 @@
+import { DashBoard } from './tour-guides-app/interfaces/dashboard';
 
 import { OverviewComponent } from './tour-guides-app/overview/overview.component';
 import { ActivatedRouteSnapshot, Routes } from '@angular/router';
@@ -23,12 +24,24 @@ import { CreateRoomComponent } from './hotels-app/create-room/create-room.compon
 import { TouristDashboardComponent } from './tourist/dashboard/tourist.dashboard.component';
 import { TouristProfileComponent } from './tourist/tourist-profile/tourist-profile.component';
 import { EditBookingComponent } from './tourist/edit-booking/edit-booking.component';
+import { LoginComponent } from './landing-app/Components/login/login.component';
+import { RegisterComponent } from './landing-app/Components/register/register.component';
+import { AuthGuard } from './landing-app/auth.guard';
+import { CompanyRegisterComponent } from './landing-app/Components/register/company-register/company-register.component';
+import { TourGuideRegisterComponent } from './landing-app/Components/register/tour-guide-register/tour-guide-register.component';
+import { HotelRegisterComponent } from './landing-app/Components/register/hotel-register/hotel-register.component';
+import { TouristRegisterComponent } from './landing-app/Components/register/tourist-register/tourist-register.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'Tour Guides', component: TourGuidesComponent },
     { path: 'hotel-reservation', component: AllHotelsComponent },
-    { path: 'hotel-reservation/:hotelName', component: HotelsDetailsComponent },
+    {
+        path: 'hotel-reservation/:hotelName', component: HotelsDetailsComponent,
+        canActivate: [
+            AuthGuard,
+        ]
+    },
     {
         path: 'tour-guide', component: TourGuidesMainComponent, children: [
             {
@@ -41,6 +54,10 @@ export const routes: Routes = [
             {
                 path: 'profile', component: ManagerTourGuideProfileComponent, title: 'Manage Profile'
             },
+        ]
+        ,
+        canActivate: [
+            AuthGuard,
         ]
     },
     {
@@ -75,6 +92,10 @@ export const routes: Routes = [
                 title: 'Edit Package',
             },
         ],
+
+        canActivate: [
+            AuthGuard,
+        ]
     },
     {
         path: 'hotel',
@@ -112,10 +133,17 @@ export const routes: Routes = [
                 }
 
             ],
+
+        canActivate: [
+            AuthGuard,
+        ]
     },
     {
         path: 'tourist/dashboard',
         component: TouristDashboardComponent,
+        canActivate: [
+            AuthGuard,
+        ]
     },
     {
         path: 'tourist/',
@@ -125,6 +153,9 @@ export const routes: Routes = [
     {
         path: 'tourist/profile',
         component: TouristProfileComponent,
+        canActivate: [
+            AuthGuard,
+        ]
     },
     {
         path: 'tourist/edit-booking/:id',
@@ -133,7 +164,26 @@ export const routes: Routes = [
             id: (route: ActivatedRouteSnapshot) => {
                 return route.paramMap.get('id');
             }
-        }
+        },
+        canActivate: [
+            AuthGuard,
+        ]
+    },
+    { path: 'register', component: RegisterComponent },
+    {
+        path: 'login', component: LoginComponent,
+    },
+    {
+        path: 'register/company', component: CompanyRegisterComponent,
+    },
+    {
+        path: 'register/guide', component: TourGuideRegisterComponent,
+    },
+    {
+        path: 'register/hotel', component: HotelRegisterComponent,
+    },
+    {
+        path: 'register/tourist', component: TouristRegisterComponent,
     },
     { path: '', redirectTo: '/hotel-reservation', pathMatch: 'full' },
     { path: '**', redirectTo: '' }

@@ -7,6 +7,7 @@ import { DeletePackageComponent } from './delete-package/delete-package.componen
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AlertDialogComponent } from '../../alert-dialog-component/alert-dialog-component';
+import { User } from '../../tourist/tourist';
 @Component({
   selector: 'app-dashboard',
   imports: [RouterModule, MatProgressSpinnerModule, CommonModule],
@@ -64,8 +65,11 @@ export class DashboardComponent implements OnInit {
         }
       }
     );
-    this.service.getCompanyPackages("72a46972-93a8-4960-9b45-a6affa1cafb4");
-    this.service.getCompanyBookings("khaled.mahmoud@example.com");
+    console.log(localStorage.getItem('email'));
+    console.log(localStorage.getItem('id'));
+
+    this.service.getCompanyPackages();
+    this.service.getCompanyBookings();
   }
 
   name: string = "Aisha";

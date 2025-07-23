@@ -13,7 +13,7 @@ export class TouristService {
   deleteBooking(id: string) {
     return this.client.delete<Tourist>(this.baseUrl + 'Bookings/' + id, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNDliZDIwYi1jYjUwLTQyY2UtYTA3Mi0yMTE2NTdmNGMwOWEiLCJqdGkiOiIxZDNhNGQwMC00NDg2LTRiYzEtYWY2Ni0zMGU3ZjU4MzZkYTAiLCJlbWFpbCI6ImFsaWNlLnNtaXRoQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzdCIsInJvbGVzIjoiVG91cmlzdCIsImV4cCI6MTc1NTYzMzg1NiwiaXNzIjoiRWd5cHRUcmlwQXBpIiwiYXVkIjoiRWd5cHRUcmlwQXBpIn0.iijIK5F9PKjOhUvu7t7gBvd5V2AJRsl7ueRT9bgGV7Y',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     }).pipe(tap(e => {
       this.touristDashBoard$.subscribe(
@@ -31,7 +31,7 @@ export class TouristService {
   getTourist() {
     this.client.get<Tourist>(this.baseUrl + 'Dashboard/tourist', {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNDliZDIwYi1jYjUwLTQyY2UtYTA3Mi0yMTE2NTdmNGMwOWEiLCJqdGkiOiIxZDNhNGQwMC00NDg2LTRiYzEtYWY2Ni0zMGU3ZjU4MzZkYTAiLCJlbWFpbCI6ImFsaWNlLnNtaXRoQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzdCIsInJvbGVzIjoiVG91cmlzdCIsImV4cCI6MTc1NTYzMzg1NiwiaXNzIjoiRWd5cHRUcmlwQXBpIiwiYXVkIjoiRWd5cHRUcmlwQXBpIn0.iijIK5F9PKjOhUvu7t7gBvd5V2AJRsl7ueRT9bgGV7Y',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     }).subscribe((e) => this.touristSubject$.next(e));
   }
@@ -42,7 +42,7 @@ export class TouristService {
       lastName: tourist.name.split(' ')[1],
     }, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNDliZDIwYi1jYjUwLTQyY2UtYTA3Mi0yMTE2NTdmNGMwOWEiLCJqdGkiOiIxZDNhNGQwMC00NDg2LTRiYzEtYWY2Ni0zMGU3ZjU4MzZkYTAiLCJlbWFpbCI6ImFsaWNlLnNtaXRoQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzdCIsInJvbGVzIjoiVG91cmlzdCIsImV4cCI6MTc1NTYzMzg1NiwiaXNzIjoiRWd5cHRUcmlwQXBpIiwiYXVkIjoiRWd5cHRUcmlwQXBpIn0.iijIK5F9PKjOhUvu7t7gBvd5V2AJRsl7ueRT9bgGV7Y',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     });
   }
@@ -50,7 +50,7 @@ export class TouristService {
   editBooking(booking: Booking): Observable<Booking> {
     return this.client.put<Booking>(this.baseUrl + 'Bookings/' + booking.bookingID, booking, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNDliZDIwYi1jYjUwLTQyY2UtYTA3Mi0yMTE2NTdmNGMwOWEiLCJqdGkiOiIxZDNhNGQwMC00NDg2LTRiYzEtYWY2Ni0zMGU3ZjU4MzZkYTAiLCJlbWFpbCI6ImFsaWNlLnNtaXRoQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzdCIsInJvbGVzIjoiVG91cmlzdCIsImV4cCI6MTc1NTYzMzg1NiwiaXNzIjoiRWd5cHRUcmlwQXBpIiwiYXVkIjoiRWd5cHRUcmlwQXBpIn0.iijIK5F9PKjOhUvu7t7gBvd5V2AJRsl7ueRT9bgGV7Y',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     });
   }
@@ -58,7 +58,7 @@ export class TouristService {
   getBooking(id: string): Observable<Booking> {
     return this.client.get<Booking>(this.baseUrl + 'Bookings/' + id, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNDliZDIwYi1jYjUwLTQyY2UtYTA3Mi0yMTE2NTdmNGMwOWEiLCJqdGkiOiIxZDNhNGQwMC00NDg2LTRiYzEtYWY2Ni0zMGU3ZjU4MzZkYTAiLCJlbWFpbCI6ImFsaWNlLnNtaXRoQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzdCIsInJvbGVzIjoiVG91cmlzdCIsImV4cCI6MTc1NTYzMzg1NiwiaXNzIjoiRWd5cHRUcmlwQXBpIiwiYXVkIjoiRWd5cHRUcmlwQXBpIn0.iijIK5F9PKjOhUvu7t7gBvd5V2AJRsl7ueRT9bgGV7Y',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     });
   }

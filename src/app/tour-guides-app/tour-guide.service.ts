@@ -23,7 +23,7 @@ export class TourGuideService {
   getTourGuideDashBoard() {
     this.client.get<DashBoard>(this.baseUrl + '/DashBoard/tourguide', {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4YjdhNjMyOC0wNTU2LTQ1Y2MtYjcwOC1kYTA5Njg4OWVjMWIiLCJqdGkiOiJhOTczOGFiZS1kMjA3LTRlN2UtOTA0Yi0yOWVhMGFhMWU4YjAiLCJlbWFpbCI6Im1vaGFtZWQuaGFzc2FuQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91ckd1aWRlIiwicm9sZXMiOiJUb3VyR3VpZGUiLCJleHAiOjE3NTU3MTIwMjAsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.QvRjFHwROpWgngssSBpbfla6EvU6HN3QKzIJXlZkovw'
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     }).subscribe(
       (tourGuideDashBoard) => {
@@ -33,7 +33,7 @@ export class TourGuideService {
   }
 
   editTourGuide(formData: FormData): Observable<TourGuide> {
-    return this.client.put<TourGuide>(this.baseUrl + '/TourGuides/' + formData.get('guideID'), formData, { headers: { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4YjdhNjMyOC0wNTU2LTQ1Y2MtYjcwOC1kYTA5Njg4OWVjMWIiLCJqdGkiOiI4Zjc4NWFjMS04ZDAyLTQyMDEtYTVhZC0xNDk1MDc2NzU4ZDkiLCJlbWFpbCI6Im1vaGFtZWQuaGFzc2FuQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91ckd1aWRlIiwicm9sZXMiOiJUb3VyR3VpZGUiLCJleHAiOjE3NTU0NDU2MzEsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.2fRZ2vxEYrPD9nvzsA_y30yRGwtZ1F524rPtU-epAag' }, });
+    return this.client.put<TourGuide>(this.baseUrl + '/TourGuides/' + formData.get('guideID'), formData, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }, });
   }
 
   getDestinations(): Observable<Destination[]> {

@@ -17,27 +17,22 @@ export class CompanyService {
   private destinationSubject = new BehaviorSubject<Destination[]>([]);
   destinations$ = this.destinationSubject.asObservable();
 
-  constructor() {
-    // localStorage.setItem("companyToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlODU2NmU4OC1kY2ZhLTQxNWYtYTI2NS1hNWZiZWI2ODEzYzEiLCJqdGkiOiJkMmVjMjFkZi1jNjhkLTRmZTEtODhjYS0wNmYwNjJlODhhMmMiLCJlbWFpbCI6ImtoYWxlZC5tYWhtb3VkQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzbUNvbXBhbnkiLCJyb2xlcyI6IlRvdXJpc21Db21wYW55IiwiZXhwIjoxNzU1NTAzOTg2LCJpc3MiOiJFZ3lwdFRyaXBBcGkiLCJhdWQiOiJFZ3lwdFRyaXBBcGkifQ.HgxI6j2YLr9CNlNVg2HcDI0jv-3svLjKZOcfMPZxJ2o");
-  }
+  constructor() { }
 
   baseUrl: string = 'https://fizo.runasp.net/api';
 
   httpClient = inject(HttpClient);
 
-  companyId = '';
+  companyId = localStorage.getItem('id');
 
-
-  getCompanyBookings(companyEmail: string) {
-    this.httpClient.get<Booking[]>(this.baseUrl + "/Bookings/provider/" + companyEmail).subscribe(
+  getCompanyBookings() {
+    this.httpClient.get<Booking[]>(this.baseUrl + "/Bookings/provider/" + localStorage.getItem('email')!).subscribe(
       (bookings) => this.bookingsSubject.next(bookings),
     );
   }
 
-  getCompanyPackages(companyId: string) {
-    console.log('id is : ' + companyId);
-
-    this.httpClient.get<Package[]>(this.baseUrl + "/TourPackages/company/" + companyId).subscribe((companyPackage) => {
+  getCompanyPackages() {
+    this.httpClient.get<Package[]>(this.baseUrl + "/TourPackages/company/" + this.companyId).subscribe((companyPackage) => {
       this.packagesSubject.next(companyPackage);
     });
   }
@@ -51,14 +46,14 @@ export class CompanyService {
     console.log("package payload id : " + editedPackage.packageId);
     return this.httpClient.put<Package>(this.baseUrl + "/TourPackages/" + editedPackage.packageId, editedPackage, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlODU2NmU4OC1kY2ZhLTQxNWYtYTI2NS1hNWZiZWI2ODEzYzEiLCJqdGkiOiJkMmVjMjFkZi1jNjhkLTRmZTEtODhjYS0wNmYwNjJlODhhMmMiLCJlbWFpbCI6ImtoYWxlZC5tYWhtb3VkQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzbUNvbXBhbnkiLCJyb2xlcyI6IlRvdXJpc21Db21wYW55IiwiZXhwIjoxNzU1NTAzOTg2LCJpc3MiOiJFZ3lwdFRyaXBBcGkiLCJhdWQiOiJFZ3lwdFRyaXBBcGkifQ.HgxI6j2YLr9CNlNVg2HcDI0jv-3svLjKZOcfMPZxJ2o eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlODU2NmU4OC1kY2ZhLTQxNWYtYTI2NS1hNWZiZWI2ODEzYzEiLCJqdGkiOiJkMmVjMjFkZi1jNjhkLTRmZTEtODhjYS0wNmYwNjJlODhhMmMiLCJlbWFpbCI6ImtoYWxlZC5tYWhtb3VkQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzbUNvbXBhbnkiLCJyb2xlcyI6IlRvdXJpc21Db21wYW55IiwiZXhwIjoxNzU1NTAzOTg2LCJpc3MiOiJFZ3lwdFRyaXBBcGkiLCJhdWQiOiJFZ3lwdFRyaXBBcGkifQ.HgxI6j2YLr9CNlNVg2HcDI0jv-3svLjKZOcfMPZxJ2o',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     });
   }
   deletePackage(deletedPackageId: string) {
     return this.httpClient.delete<Package>(this.baseUrl + "/TourPackages/" + deletedPackageId, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlODU2NmU4OC1kY2ZhLTQxNWYtYTI2NS1hNWZiZWI2ODEzYzEiLCJqdGkiOiJkMmVjMjFkZi1jNjhkLTRmZTEtODhjYS0wNmYwNjJlODhhMmMiLCJlbWFpbCI6ImtoYWxlZC5tYWhtb3VkQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzbUNvbXBhbnkiLCJyb2xlcyI6IlRvdXJpc21Db21wYW55IiwiZXhwIjoxNzU1NTAzOTg2LCJpc3MiOiJFZ3lwdFRyaXBBcGkiLCJhdWQiOiJFZ3lwdFRyaXBBcGkifQ.HgxI6j2YLr9CNlNVg2HcDI0jv-3svLjKZOcfMPZxJ2o eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlODU2NmU4OC1kY2ZhLTQxNWYtYTI2NS1hNWZiZWI2ODEzYzEiLCJqdGkiOiJkMmVjMjFkZi1jNjhkLTRmZTEtODhjYS0wNmYwNjJlODhhMmMiLCJlbWFpbCI6ImtoYWxlZC5tYWhtb3VkQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVG91cmlzbUNvbXBhbnkiLCJyb2xlcyI6IlRvdXJpc21Db21wYW55IiwiZXhwIjoxNzU1NTAzOTg2LCJpc3MiOiJFZ3lwdFRyaXBBcGkiLCJhdWQiOiJFZ3lwdFRyaXBBcGkifQ.HgxI6j2YLr9CNlNVg2HcDI0jv-3svLjKZOcfMPZxJ2o',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     }).pipe(
       tap(() => {
@@ -72,7 +67,7 @@ export class CompanyService {
   createPackage(formData: FormData): Observable<Package> {
     return this.httpClient.post<Package>(this.baseUrl + "/TourPackages", formData, {
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem("companyToken"),
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       }
     },);
   }

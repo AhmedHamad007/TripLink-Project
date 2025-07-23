@@ -12,7 +12,7 @@ export class HotelsService {
   editProfile(formData: FormData, hotelId: string): Observable<Hotel> {
     return this.client.put<Hotel>(this.baseUrl + 'Hotels/' + hotelId, formData, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNzM2NjhkMy05MGM1LTRmOGYtYjA2NS0wNzVjYTZiNDcwN2MiLCJqdGkiOiJiN2VlNDY2MS0wYzJjLTRkMDUtYjgwNi01NWFlZmU5NmIxZTYiLCJlbWFpbCI6InNhcmEuYWhtZWRAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJIb3RlbCIsInJvbGVzIjoiSG90ZWwiLCJleHAiOjE3NTU1NDIyMjEsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.CrmD7MfOII_fsj_EfAZapPyUEa7wbwcp2SsqOqWufuo',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
 
       }
     });
@@ -20,7 +20,7 @@ export class HotelsService {
   editRoom(room: FormData, roomId: string) {
     return this.client.put<Room>(this.baseUrl + 'rooms/' + roomId, room, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNzM2NjhkMy05MGM1LTRmOGYtYjA2NS0wNzVjYTZiNDcwN2MiLCJqdGkiOiJiN2VlNDY2MS0wYzJjLTRkMDUtYjgwNi01NWFlZmU5NmIxZTYiLCJlbWFpbCI6InNhcmEuYWhtZWRAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJIb3RlbCIsInJvbGVzIjoiSG90ZWwiLCJleHAiOjE3NTU1NDIyMjEsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.CrmD7MfOII_fsj_EfAZapPyUEa7wbwcp2SsqOqWufuo',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     }).subscribe({
       next: (value) => {
@@ -57,7 +57,7 @@ export class HotelsService {
   deleteRoom(roomId: string) {
     return this.client.delete<Room>(this.baseUrl + 'rooms/' + roomId, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNzM2NjhkMy05MGM1LTRmOGYtYjA2NS0wNzVjYTZiNDcwN2MiLCJqdGkiOiJiN2VlNDY2MS0wYzJjLTRkMDUtYjgwNi01NWFlZmU5NmIxZTYiLCJlbWFpbCI6InNhcmEuYWhtZWRAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJIb3RlbCIsInJvbGVzIjoiSG90ZWwiLCJleHAiOjE3NTU1NDIyMjEsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.CrmD7MfOII_fsj_EfAZapPyUEa7wbwcp2SsqOqWufuo',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     }).pipe(tap(r => {
       this.roomsSubject.subscribe(
@@ -71,11 +71,10 @@ export class HotelsService {
 
   }
 
-  hotelId = '';
   addNewRoom(formData: FormData): Observable<Room> {
-    return this.client.post<Room>(this.baseUrl + 'Hotels/' + this.hotelId + '/rooms', formData, {
+    return this.client.post<Room>(this.baseUrl + 'Hotels/' + localStorage.getItem('id') + '/rooms', formData, {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNzM2NjhkMy05MGM1LTRmOGYtYjA2NS0wNzVjYTZiNDcwN2MiLCJqdGkiOiJiN2VlNDY2MS0wYzJjLTRkMDUtYjgwNi01NWFlZmU5NmIxZTYiLCJlbWFpbCI6InNhcmEuYWhtZWRAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJIb3RlbCIsInJvbGVzIjoiSG90ZWwiLCJleHAiOjE3NTU1NDIyMjEsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.CrmD7MfOII_fsj_EfAZapPyUEa7wbwcp2SsqOqWufuo',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
     });
   }
@@ -91,19 +90,17 @@ export class HotelsService {
 
   constructor(private client: HttpClient) {
     this.matDialog = inject(MatDialog);
-    // localStorage.setItem('hotelToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNzM2NjhkMy05MGM1LTRmOGYtYjA2NS0wNzVjYTZiNDcwN2MiLCJqdGkiOiJiN2VlNDY2MS0wYzJjLTRkMDUtYjgwNi01NWFlZmU5NmIxZTYiLCJlbWFpbCI6InNhcmEuYWhtZWRAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJIb3RlbCIsInJvbGVzIjoiSG90ZWwiLCJleHAiOjE3NTU1NDIyMjEsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.CrmD7MfOII_fsj_EfAZapPyUEa7wbwcp2SsqOqWufuo');
   }
 
 
   getHotelDashBoard() {
     this.client.get<HotelDashBoard>(this.baseUrl + 'Dashboard/hotel', {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNzM2NjhkMy05MGM1LTRmOGYtYjA2NS0wNzVjYTZiNDcwN2MiLCJqdGkiOiJiN2VlNDY2MS0wYzJjLTRkMDUtYjgwNi01NWFlZmU5NmIxZTYiLCJlbWFpbCI6InNhcmEuYWhtZWRAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJIb3RlbCIsInJvbGVzIjoiSG90ZWwiLCJleHAiOjE3NTU1NDIyMjEsImlzcyI6IkVneXB0VHJpcEFwaSIsImF1ZCI6IkVneXB0VHJpcEFwaSJ9.CrmD7MfOII_fsj_EfAZapPyUEa7wbwcp2SsqOqWufuo',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     }).pipe(take(1)).subscribe(
       {
         next: (value) => {
-          this.hotelId = value.hotel?.hotelID!;
           this.hotelDashBoardSubject.next(value);
           this.roomsSubject.next(value.rooms!);
         },

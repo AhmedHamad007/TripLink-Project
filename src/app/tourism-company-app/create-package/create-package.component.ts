@@ -81,13 +81,7 @@ export class CreatePackageComponent implements OnInit {
         },
         error: (error) => {
           let message = '';
-          error['error']['errors'].map((e: string) => message += e + '\n');
-          this.matDialog.open(AlertDialogComponent, {
-            data: {
-              title: 'Error',
-              message: message
-            }
-          });
+          console.log(error.errors);
         }
       }
     );
