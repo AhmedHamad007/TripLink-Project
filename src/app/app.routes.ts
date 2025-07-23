@@ -1,3 +1,4 @@
+import { companyGuard, hotelGuard, tourGuideGuard, touristGuard } from './landing-app/Components/register/role.guard';
 import { DashBoard } from './tour-guides-app/interfaces/dashboard';
 
 import { OverviewComponent } from './tour-guides-app/overview/overview.component';
@@ -58,6 +59,7 @@ export const routes: Routes = [
         ,
         canActivate: [
             AuthGuard,
+            tourGuideGuard,
         ]
     },
     {
@@ -95,6 +97,7 @@ export const routes: Routes = [
 
         canActivate: [
             AuthGuard,
+            companyGuard,
         ]
     },
     {
@@ -136,6 +139,7 @@ export const routes: Routes = [
 
         canActivate: [
             AuthGuard,
+            hotelGuard,
         ]
     },
     {
@@ -143,6 +147,7 @@ export const routes: Routes = [
         component: TouristDashboardComponent,
         canActivate: [
             AuthGuard,
+            touristGuard,
         ]
     },
     {
@@ -155,6 +160,8 @@ export const routes: Routes = [
         component: TouristProfileComponent,
         canActivate: [
             AuthGuard,
+            touristGuard,
+
         ]
     },
     {
@@ -167,6 +174,8 @@ export const routes: Routes = [
         },
         canActivate: [
             AuthGuard,
+            touristGuard,
+
         ]
     },
     { path: 'register', component: RegisterComponent },

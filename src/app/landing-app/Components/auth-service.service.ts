@@ -126,63 +126,6 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getHotelId(): Observable<string | undefined> {
-    console.log(`token in hotel ${this.getToken()}`);
-
-    return this.client.get<HotelDashBoard>('https://fizo.runasp.net/api/Dashboard/hotel', {
-      headers: {
-        'Authorization': `Bearer ${this.getToken()}`
-      }
-    }).pipe(map(e => {
-      const id = e.hotel?.hotelID;
-      this.id = id!;
-      localStorage.setItem('id', e.hotel?.hotelID!);
-      return e.hotel?.hotelID!;
-    }));
-  }
-  getCompanyId(): Observable<string | undefined> {
-    console.log(`token in company ${this.getToken()}`);
-
-    return this.client.get<any>('https://fizo.runasp.net/api/Dashboard/tourismcompany', {
-      headers: {
-        'Authorization': `Bearer ${this.getToken()}`
-      }
-    }).pipe((map(e => {
-      const id = e.companyID;
-      this.id = id;
-      localStorage.setItem('id', e.companyID);
-      return id;
-    })))
-  }
-  getTouristId(): Observable<string | undefined> {
-    console.log(`token in tourist ${this.getToken()}`);
-
-    return this.client.get<Tourist>('https://fizo.runasp.net/api/Dashboard/tourist', {
-      headers: {
-        'Authorization': `Bearer ${this.getToken()}`
-      }
-    }).pipe(map(e => {
-      const id = e.userID;
-      this.id = id!;
-      localStorage.setItem('id', e.userID);
-      return e.userID;
-    }));
-  }
-  getTourGuideId(): Observable<string | undefined> {
-    console.log(`token in tour guide ${this.getToken()}`);
-
-    return this.client.get<TourGuide>('https://fizo.runasp.net/api/Dashboard/tourguide', {
-      headers: {
-        'Authorization': `Bearer ${this.getToken()}`
-      }
-    }).pipe(map(e => {
-      const id = e.guideID;
-      this.id = id!;
-      localStorage.setItem('id', e.guideID!);
-      return e.guideID;
-    }));
-  }
-
   public navigateBasedOnRole(): void {
     const role = this.getRoleFromToken();
 
