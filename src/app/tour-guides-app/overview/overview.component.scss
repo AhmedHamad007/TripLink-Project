@@ -73,7 +73,7 @@ h1 {
     }
 }
 
-.status-Complete {
+.status-Confirmed {
     background-color: #e0f7e9;
     color: #2e7d32;
     padding: 6px 12px;
@@ -90,6 +90,17 @@ h1 {
     display: inline-block;
     font-size: 14px;
 }
+
+
+.status-Cancelled {
+    background-color: #bf2f2f;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 14px;
+}
+
 
 .performance {
     display: flex;

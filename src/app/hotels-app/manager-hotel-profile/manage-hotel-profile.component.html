@@ -2,15 +2,18 @@
     <div class="container">
         <h1 class="mt-5">Profile</h1>
         <p>Manage your Profile details</p>
+
         @defer (when isHotelReqFinished) {
-        <h2 class="mt-2">Profile Images</h2>
         <div class="photo-slider">
+
             @for (item of hotel.photoUrls; track $index) {
             <div class="photo">
                 <img [src]="item" alt="Profile Photo" />
             </div>
             }
         </div>
+
+        <h2 class="mt-2">Profile Images</h2>
         <form (ngSubmit)="editProfile()">
             <label>Hotel name</label>
             <input type="text" placeholder="Enter Hotel Name" [(ngModel)]="hotel.hotelName" name="hotel">

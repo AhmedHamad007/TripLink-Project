@@ -79,7 +79,7 @@
                     <p>{{item.bookingDate.split('T')[0]}}</p>
                 </td>
                 <td data-label="Status">
-                    <p class="status-Pending">{{item.status}}</p>
+                    <p class='status-{{item.status}}'>{{item.status}}</p>
                 </td>
                 <td data-label="Actions">
                     <button [routerLink]="['/tourist/edit-booking',item.bookingID]" (click)="print(item)">Edit</button>

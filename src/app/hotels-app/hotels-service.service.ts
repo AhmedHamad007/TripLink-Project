@@ -85,6 +85,10 @@ export class HotelsService {
   roomsSubject = new ReplaySubject<Room[]>();
   roomsDashBoard$ = this.roomsSubject.asObservable();
 
+  profileSubject = new ReplaySubject<Hotel>();
+  profileDashBoard$ = this.profileSubject.asObservable();
+
+
   baseUrl = 'https://fizo.runasp.net/api/';
 
 
@@ -109,5 +113,11 @@ export class HotelsService {
         }
       }
     );
+  }
+
+  getHotelProfile() {
+    this.client.get<Hotel>(this.baseUrl + `Hotels/${localStorage.getItem('id')}`).subscribe(
+      (profile) => { this.profileSubject.next(profile); }
+    )
   }
 }

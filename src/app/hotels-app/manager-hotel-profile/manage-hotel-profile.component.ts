@@ -26,12 +26,10 @@ export class ManageHotelProfileComponent implements OnInit {
   isHotelReqFinished = false;
 
   ngOnInit(): void {
-    this.service.hotelDashBoard$.subscribe(
+    this.service.profileDashBoard$.subscribe(
       {
         next: (value) => {
-          this.hotel = value.hotel!;
-          console.log(this.hotel.hotelID);
-          console.log(value.hotel);
+          this.hotel = value;
           this.isHotelReqFinished = true;
         },
         error: (err) => {
@@ -46,7 +44,7 @@ export class ManageHotelProfileComponent implements OnInit {
         },
       }
     );
-    this.service.getHotelDashBoard();
+    this.service.getHotelProfile();
   }
 
 

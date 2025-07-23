@@ -41,10 +41,8 @@ export class CompanyService {
     return this.httpClient.get<Package>(this.baseUrl + "/TourPackages/" + packageId);
   }
 
-  editPackage(editedPackage: Package): Observable<Package> {
-    console.log("package payload : " + editedPackage.packageName);
-    console.log("package payload id : " + editedPackage.packageId);
-    return this.httpClient.put<Package>(this.baseUrl + "/TourPackages/" + editedPackage.packageId, editedPackage, {
+  editPackage(formData: FormData, id: string): Observable<Package> {
+    return this.httpClient.put<Package>(this.baseUrl + "/TourPackages/" + id, formData, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }

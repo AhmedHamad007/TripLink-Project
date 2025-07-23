@@ -20,6 +20,7 @@ export class EditPackageComponent implements OnInit {
 
   destinations: Destination[] = [];
 
+  photos: File[] = [];
 
   ngOnInit(): void {
     this.service.destinations$.subscribe(
@@ -74,17 +75,30 @@ export class EditPackageComponent implements OnInit {
   package!: Package;
 
   saveData() {
-    this.service.editPackage(this.package).subscribe({
+    const formData = new FormData();
+    formData.append('PackageName', this.package.packageName);
+    formData.append('Description', this.package.description);
+    formData.append('Price', this.package.price);
+    formData.append('DurationDays', this.package.durationDays.toString());
+    formData.append('StartDate', this.package.startDate);
+    formData.append('EndDate', this.package.endDate);
+    this.package.destinationIds!.map((e) => {
+      formData.append('DestinationIds', e.toString());
+    });
+    this.package.photoUrls!.map((e) => {
+      formData.append('Photos', e.toString());
+    });
+    this.service.editPackage(formData, this.package.packageId).subscribe({
       next: (value) => {
         console.log(value);
+        this.package = value;
       },
       error: (err) => {
         let message = '';
-        err['error']['errors'].map((e: string) => message += e + '\n');
         this.matDialog.open(AlertDialogComponent, {
           data: {
             title: 'Error',
-            message: message
+            message: 'Check Your Data!'
           }
         });
       },
@@ -113,5 +127,14 @@ export class EditPackageComponent implements OnInit {
 
   removeImage(photo: string) {
     this.package.photoUrls = this.package.photoUrls?.filter((e) => e != photo);
+  }
+
+  addToImages(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files != null && input.files.length > 0) {
+      for (let index = 0; index < input.files.length; index++) {
+        this.photos.push(input.files[index]);
+      }
+    }
   }
 }
