@@ -1,16 +1,13 @@
-import { HotelRegistration } from './register/register-interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { User } from './login/user';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { DecodedToken } from './decoded-token';
 import { NavigationExtras, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { isPlatformBrowser } from '@angular/common';
-import { log } from 'console';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../../alert-dialog-component/alert-dialog-component';
-import { title } from 'process';
 import { HotelDashBoard } from '../../hotels-app/interfaces/hotel-dashboard';
 import { Tourist } from '../../tourist/tourist';
 import { TourGuide } from '../../tour-guides-app/interfaces/tour-guide';
@@ -87,6 +84,11 @@ export class AuthService {
   public getRoleFromToken() {
     const decoded = this.getDecodedToken();
     if (!decoded) return null;
+
+    localStorage.setItem('id', decoded.sub);
+
+    console.log(decoded);
+
 
     const role =
       decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ||
@@ -191,31 +193,21 @@ export class AuthService {
 
     switch (role.toLowerCase()) {
       case 'hotel':
-        this.getHotelId().subscribe(id => {
-          this.id = id!;
-          this.router.navigate(['/hotel/dashboard'], { replaceUrl: true });
-        });
+        this.router.navigate(['/hotel/dashboard'], { replaceUrl: true });
+
         break;
 
       case 'tourismcompany':
-        this.getCompanyId().subscribe(id => {
-          this.id = id!;
-          this.router.navigate(['/company/dashboard'], { replaceUrl: true });
-        });
+        this.router.navigate(['/company/dashboard'], { replaceUrl: true });
+
         break;
 
       case 'tourist':
-        this.getTouristId().subscribe(id => {
-          this.id = id!;
-          this.router.navigate(['/tourist/dashboard'], { replaceUrl: true });
-        });
+        this.router.navigate(['/tourist/dashboard'], { replaceUrl: true });
         break;
 
       case 'tourguide':
-        this.getTourGuideId().subscribe(id => {
-          this.id = id!;
-          this.router.navigate(['/tour-guide'], { replaceUrl: true });
-        });
+        this.router.navigate(['/tour-guide'], { replaceUrl: true });
         break;
 
       default:
